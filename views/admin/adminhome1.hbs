@@ -1,0 +1,308 @@
+
+
+<section>
+     <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>Dashboard</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div >
+        <!-- Content Start -->
+     
+
+            <!-- Sale & Revenue Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Today Sale</p>
+                                <h6 class="mb-0">Rs.1234</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Sale</p>
+                             
+                                <h6 class="mb-0">Rs.{{totalSale}}</h6>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-area fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Today Orders</p>
+                                <h6 class="mb-0">{{totalOrders}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Customers</p>
+                                <h6 class="mb-0">{{totalCustomers}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sale & Revenue End -->
+
+
+            <!-- Sales Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-white text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Today Sales</h6>
+                                {{!-- <a href="">Show All</a> --}}
+                            </div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-white text-center text-white rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Monthly Sales</h6>
+                                {{!-- <a href="">Show All</a> --}}
+                            </div>
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-white text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Yearly Sales</h6>
+                                {{!-- <a href="">Show All</a> --}}
+                            </div>
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-white text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">All orders</h6>
+                                {{!-- <a href="">Show All</a> --}}
+                            </div>
+                            <canvas id="myChart4"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sales Chart End -->
+
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Recent Salse</h6>
+                        <a href="">Show All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-white">
+                                    <th scope="col"></th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Invoice</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>01 Jan 2045</td>
+                                    <td>INV-0123</td>
+                                    <td>Jhon Doe</td>
+                                    <td>$123</td>
+                                    <td>Paid</td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+
+
+            
+ 
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        {{!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> --}}
+    </div>
+
+
+    <!-- Template Javascript -->
+</section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{!-- ==================  chart 1================= --}}
+<script>
+  
+  const labels = [
+    'Monday',
+    'Tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+    //  textColor:'rgb(255,255,255)';
+      data: [0, 10, 5, 2, 20, 30, 45],
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+
+ <script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+ Chart.defaults.global.defaultFontColor = "rgb(255,255,255)";
+//myChart.defaults.color = "rgb(255,255,255)"
+</script>
+
+
+{{!-- =========================== chart 2 =================== --}}
+
+<script>
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [0, 10, 5, 2, 20, 30, 45],
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+
+ <script>
+  const myChart2 = new Chart(
+    document.getElementById('myChart2'),
+    config
+  );
+</script>
+
+{{!-- =========================== chart 3 =================== --}}
+
+<script>
+  
+var yValues = [{{allStatus.placed.placed}},{{allStatus.pending.pending}},{{allStatus.cancelled.cancelled}},{{allStatus.delivered.delivered}}];
+
+new Chart("myChart3", {
+  type: "bar",
+        data: {
+            labels: ["Placed", "Pending", "Cancelled", "Delivered"],
+            datasets: [{
+                    label: "Status",
+                    data: yValues,
+                    backgroundColor: "rgba(235, 22, 22, .7)",
+                    borderColor: 'rgb(255, 99, 132)',
+
+                },
+              
+            ]
+            },
+        options: {
+            responsive: true
+        }
+});
+</script>
+ <script>
+  const myChart3 = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+
+
+
+
+{{!-- =========================== chart 4 ===================== --}}
+
+<script>
+var yValues = [20,100,200,400];
+
+new Chart("myChart4", {
+  type: "bar",
+        data: {
+            labels: [],
+            datasets: [{
+                    label: "Yearly",
+                    data: [15, 30, 55, 65, 60, 80, 95],
+                    backgroundColor: "rgba(235, 22, 22, .7)"
+                }
+                 
+              
+            ]
+            },
+        options: {
+            responsive: true
+        }
+});
+</script>
+ <script>
+  const myChart4 = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>

@@ -1,0 +1,146 @@
+
+<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+					<h1>Wishlist</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  {{!-- end  --}}
+  {{#if nowish}}
+  <div class="text-center">
+   <a href="/"><img style=" height:40rem"class="image-responsive" title="Start Shopping" src="/images/wish.jpg"
+                        alt="" srcset=""></a>
+                        </div>
+                        {{else}}
+ <div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:12rem; right:10px; "
+    id="cartAddedMessage" role="alert">
+    <strong>Item added to <a href="/cart">cart</a> <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top: 8rem; right:10px; "
+    id="removedProduct" role="alert">
+    <strong>Item Removed From Wishlist <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{!-- wishlist --}}
+<div class="cart-section mt-5 mb-5">
+		<div class="container">
+			<div class="row">
+				<div class=" col-md-12 ">
+					<div class="cart-table-wrap">
+						<table class="cart-table col-sm-table-responsive">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									
+									    <th class="col-md-3">Product</th>
+                                <th class="col-md-3">Price</th>
+                                <th class="ml-2 col-md-3">Cart</th>
+                                <th class="col-md-3">Remove</th>
+								</tr>
+							</thead>
+							<tbody>
+								  {{#each result}}
+                            <tr id="{{this.orderproducts._id}}">
+                                <td class="product_cart_item">
+                                    <div class="product_cartitem_pic">
+                                        <img src="/product-images/{{this.orderproducts._id}}.jpg" style="width: 100px;" alt="">
+                                    </div>
+                                    <div class="product_cartitem_text">
+                                        <h6>{{this.orderproducts.name}}</h6>
+                                      
+                                    </div>
+                                </td>
+                                <td class="cart__price priceofproduct pl-3">{{this.orderproducts.price}}</td>
+                                <td class="cart__close pl-2">
+                                    <button style="border: none; background: none;" type="button" title="Add item to cart"
+                                        onclick="addToCart('{{this.orderproducts._id}}')">
+                                        <i class="fa-sharp fa-solid fa-cart-plus ml-1"
+                                            id="cart{{this.orderproducts._id}}"></i>
+                                    </button>
+                                </td>
+                                <td class="cart__close pl-3">
+                                    <button style="border: none; background: none;" type="button" title="Remove item from whishlist"
+                                        onclick="removeFromWishlist('{{this.orderproducts._id}}')">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {{/each}}
+
+
+                        </tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+        </div>
+</div>
+{{/if}}
+{{!-- wishlist --}}
+
+
+
+<script>
+    function removeFromWishlist(productId) {
+        console.log('Remove from cart request received :', productId)
+        $.ajax({
+            url: `/remove-from-wishlist/${productId}`,
+            method: 'get',
+            success: (response) => {
+                console.log(response)
+                if (response !=0) {
+                    document.getElementById(productId).style.display = 'none'
+                    console.log('Items exist')
+                } else {
+                    console.log('No items')
+                    location.reload()
+                }
+                $('#removedProduct').addClass('show')
+                setTimeout(() => {
+                    $('#removedProduct').removeClass('show')
+                }, 3000)
+
+            }
+        })
+    }
+    function addToCart(productId) {
+        console.log('add to cart request received :', productId)
+        $.ajax({
+            url: `/addtocart/${productId}`,
+            method: 'get',
+            success: (res) => {
+                removeFromWishlist(productId)
+                $('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 3000)
+                 res=parseInt(res)
+       console.log(res);
+       // let count=$('#cart-count').html()
+      //  count=parseInt(count)+1
+        $('#cart-count').html(res)
+            }
+        })
+    }
+    window.addEventListener('load', (event) => {
+        console.log('page is fully loaded');
+        var price = document.getElementsByClassName("priceofproduct")
+        for (let i = 0; i < price.length; i++) {
+            var tempPrice = parseFloat(price[i].innerHTML)
+            tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+            price[i].innerHTML = tempPrice
+        }
+    });
+</script>

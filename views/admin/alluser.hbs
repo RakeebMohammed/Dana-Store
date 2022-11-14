@@ -1,0 +1,119 @@
+<body  >
+ <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>All Users</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class=" col-md-12">
+      <div class="cart-table-wrap">
+        <table class="cart-table">
+          <thead class="cart-table-head">
+            <tr class="table-head-row">
+              <th class="product-name">No.</th>
+              <th class="product-image">Username</th>
+              <th class="product-name">Email</th>
+              <th class="product-price">Phone nuber</th>
+              <th class="product-quantity">Options</th>
+            
+            </tr>
+          </thead>
+          {{#each users}}
+          <tbody>
+            <tr class="table-body-row">
+              <td class="product-remove index"></td>
+              <td class="product-remove">{{this.username}}</td>
+              <td class="product-name">{{this.email}}</td>
+              <td class="product-price">{{this.phone_number}}</td>
+              
+           
+                {{#if this.isBlocked}}
+{{!-- <td><a href="/admin/unblockuser/{{this._id}}"><button id="btnunblock" type="button"  class="btn btn-success">Unblock</button></a></td> --}}
+<td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal{{this._id}}">
+ Unblock
+</button></td>
+{{else}}
+<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{this._id}}">
+  Block
+</button></td>
+ {{!-- <td><a href="/admin/blockuser/{{this._id}}"><button id="btnblock" type="button"  class="btn btn-danger mr-3">Block</button></a></td> --}}
+
+{{/if}}
+{{!--  --}}
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+
+{{!--  --}}
+            
+            </tr>
+           
+        
+       
+<div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Confirmation meassage</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{#if this.isBlocked}}
+      <div class="modal-body">
+        Are you sure to unblock {{this.username}} ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+     <a href="/admin/unblockuser/{{this._id}}"><button id="btnunblock" type="button"  class="btn btn-success">Unblock</button></a>
+
+      {{else}}
+
+      <div class="modal-body">
+        Are you sure to block {{this.username}} ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+      <a href="/admin/blockuser/{{this._id}}"><button id="btnblock" type="button"  class="btn btn-danger mr-3">Block</button></a>
+
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+   </tbody>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+{{!--  --}}
+
+
+
+{{!--  --}}
+</body>
+<script>
+ $(document).ready(function (){
+let index= document.querySelectorAll('.index')
+console.log(index)
+ for(i=0;i<index.length;i++){
+  index[i].innerHTML=i+1
+ }
+ })
+ 
+</script>

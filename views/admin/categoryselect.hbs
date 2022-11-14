@@ -1,0 +1,71 @@
+<body  >
+   <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>Edit Category</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+      
+
+<div class="container-fluid mb-5">
+  <div class="row">
+    <div class=" col-md-12">
+      <div class="cart-table-wrap">
+        <table class="cart-table table-responsive ">
+          <thead class="cart-table-head ">
+            <tr class="table-head-row ">
+              <th class="product-name">No.</th>
+              <th class="product-name">Name</th>
+              <th class="product-name">Description</th>
+              
+<th class="product-price">Price</th>
+<th class="product-name">Stock</th>
+<th class="product-image">Image</th>
+              <th class="product-quantity">Options</th>
+            
+            </tr>
+          </thead>
+          {{#each result}}
+          <tbody>
+            <tr class="table-body-row ">
+              <td class="product-remove index"></td>
+              <td class="product-remove ">{{this.name}}</td>
+              <td class="product-name ">{{this.description}}</td>
+                 <td class="product-remove ">{{this.price}}</td>
+              <td class="product-remove ">{{this.stock}}</td>
+              <td class="product-name">
+                <img  style="width:50px;height:50px;" src='/product-images/{{this._id}}.jpg' alt=""> </td>
+            <td class=" product-name"  >
+                <a href="/admin/editproduct/{{this._id}}"><button class="btn btn-primary my-2 mx-2 ">Edit</button></a>
+                 <a href="/admin/deleteproduct/{{this._id}}"><button class="btn btn-danger">Delete</button></a>
+           
+            </td>
+            </tr>
+           
+        
+          </tbody>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+
+<script>
+ $(document).ready(function (){
+let index= document.querySelectorAll('.index')
+console.log(index)
+ for(i=0;i<index.length;i++){
+  index[i].innerHTML=i+1
+ }
+ })
+ 
+</script>

@@ -1,0 +1,51 @@
+     <body class="bg-dark gradient-custom mt-5">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border:none;">
+          <div class="card-body p-5 text-center">
+
+          <div class=" mt-md-5 pb-2">
+         {{#if otp}}
+            
+               <form action="/verifyotp" method="POST">
+              <div class="form-outline form-white mb-4">
+                <label class="form-label d-flex align-items-start" for="typePasswordX">OTP</label>
+                <input type="password" name="otp" id="typePasswordX" class="form-control form-control-lg" >
+                 <div class="text-center">
+                  <h5 class="text-danger mt-3">{{loginerr}}</h5>
+                  <a class=" text-white"href="/sendotp">Resend OTP </a>
+                  </div>
+               <button class="btn btn-outline-light btn-lg px-5 my-4" type="submit">Login</button>
+             
+              </div>
+               
+             </form>
+             
+               {{else}} 
+          
+
+
+              <form action="/sendotp" method="POST">
+               
+              <h2 class="fw-bold mb-2 text-success text-uppercase">Login</h2>
+            
+              <div class="form-outline form-white mb-4">
+                
+                <label class="form-label  d-flex align-items-start" for="typeEmailX">Mobile number</label>
+                <input type="text"   name="number" id="typeEmailX"  class="form-control form-control-lg">
+                 <div class="col-12">
+                 <h5 class="text-danger">{{loginerr}}</h5>
+                 
+                 </div>
+                 <button class="btn btn-outline-light btn-lg px-5 mt-4" type="submit">GET OTP</button>
+              </div>
+             {{/if}}
+          </div>
+         </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+     </body> 

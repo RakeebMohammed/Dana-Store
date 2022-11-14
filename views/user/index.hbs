@@ -1,0 +1,287 @@
+<style>
+.outofstock:before {
+	content: "";
+	background: rgba(255,255,255,0.5);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0; top: 0;
+}
+
+.outofstock:after {
+	content: "OUT OF STOCK";
+	position: absolute;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 100%;
+	text-align: center;
+	width: 70px;
+	height: 70px;
+	top: calc(50% - 35px);
+	left: calc(50% - 35px);
+	font-size: 0.8em;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+}
+</style>
+
+
+<body>
+	
+	
+{{!-- demo --}}
+{{#each banner}}
+<div class="hero-area " style="background-image:url(/product-images/{{this._id}}.jpg) ; background-size: cover;
+  background-position: center;
+  background-attachment: fixed;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							
+							<h1 style="margin-top:90px;">{{this.description}}</h1>
+							<h4 style="color: #f28123;"></h4>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/each}}
+	<!-- end hero area -->
+{{!-- demo --}}
+	
+	<!-- end home page slider -->
+{{!-- demo --}}
+	<!-- features list section -->
+	<div class="list-section pt-5 pb-5">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-shipping-fast"></i>
+						</div>
+						<div class="content">
+							<h3>Free Shipping</h3>
+							<p>When order over 1000 rs</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-phone-volume"></i>
+						</div>
+						<div class="content">
+							<h3>24/7 Support</h3>
+							<p>Get support all day</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="list-box d-flex justify-content-start align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-sync"></i>
+						</div>
+						<div class="content">
+							<h3>Refund</h3>
+							<p>Get refund within 3 days!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- end features list section -->
+	{{#if notfound}}
+	<div class="product-section mt-5 ">
+		<div class="container">
+			<div class="row">
+				<div style="min-height:500px" class="col-lg-8 offset-lg-2 text-center ">
+					<h2 style=" font-family: 'Poppins', sans-serif;
+ " class="text-danger" >Sorry...Product not found</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{else}}
+	<!-- product section -->
+	<div class="product-section mt-5 ">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">Our</span> Products</h3>
+					</div>
+				</div>
+			</div>
+			{{!-- test --}}
+<div style="" class=" ">
+
+			<div class="row p-0 m-0">
+                <div class="col-md-12 ">
+                    <div class="product-filters d-flex justify-content-center">
+                        <ul>
+                            <li class="active" data-filter="*">All</li>
+							{{#each result}}
+                           {{!-- <button id="{{this.category}}"onclick="selectproduct('{{this.category}}')"><li data-filter=".strawberry">{{this.category}}</li></button> --}}
+                        
+						   <a href="/selectcategory/{{this.category}}"> <li data-filter=".strawberry">{{this.category}}</li></a>
+                         {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+	</div>
+	{{!-- testover --}}
+          
+			<div class="row">
+				{{#each products}}
+				<div class="col-lg-4 col-md-6 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
+					
+					<div style="height:36rem;" class="single-product-item ">
+						
+						<div class="product-image">
+							
+							<a  href="/viewproduct/{{this._id}}"><img style="height:250px;" src="/product-images/{{this._id}}.jpg" alt=""></a>
+						</div>
+						<h3 class="col-12 text-truncate mb-2">{{this.name}}</h3>
+<s><h4 class="mrp hide p-0 m-0">{{this.MRP}}</h4></s>
+						
+					
+						<p class="product-price m-0 p-0 price">{{this.price}} </p>
+					
+			<a  class="cart-btn "	  onclick= "return addtocart('{{this._id}}')"  class="carthover"><i class="fas fa-shopping-cart"></i> Add to Cart	</a>
+						
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+		{{/if}}
+	<!-- testimonail-section -->
+	<div class="testimonail-section mt-5 mb-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1 text-center">
+					<div class="testimonial-sliders">
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="/assets/img/avaters/lm10.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3>Lionel Messi <span>Football Player</span></h3>
+								<p class="testimonial-body">
+									" You have to fight to reach your dream. You have to sacrifice and work hard for it."
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="/assets/img/avaters/dhoni.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3>Mahendra Singh Dhoni <span>Cricket Player</span></h3>
+								<p class="testimonial-body">
+									" The era of playing aggressive cricket and to have the mid-on up is gone. You now try to read the mindset of a batsman. "
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="/assets/img/avaters/cr.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3>Cristiano Ronaldo <span>Football Player</span></h3>
+								<p class="testimonial-body">
+									" "I see myself as the best footballer in the world. If you don't believe you are the best, then you will never achieve all that you are capable of."
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="/assets/img/avaters/sachin.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3>Sachin Tendulkar <span>Cricket Player</span></h3>
+								<p class="testimonial-body">
+									" Enjoy the game and chase your dreams. Dreams do come true!"
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end testimonail-section -->
+	
+	
+	<!-- latest news -->
+	
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="/images/adidas.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/Asics.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/nb.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/nike.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/puma.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+
+	
+	
+
+</body>
+<script>
+	let price=document.querySelectorAll('.price')
+	let mrp=document.querySelectorAll('.mrp')
+
+	for(i=0;i<price.length;i++){
+		if(price[i].innerText != mrp[i].innerText){
+		console.log('equal'+i)
+	
+	console.log(mrp[i].innerHTML)
+	console.log(price[i].innerHTML)
+			mrp[i].style.display="block";
+	
+		}
+	}
+	console.log('sdgd')
+</script>

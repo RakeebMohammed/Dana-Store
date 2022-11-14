@@ -1,0 +1,303 @@
+<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+							{{#if result}}
+                <h1 class="text-center">Edit Product</h1>
+                {{else}}
+						<h1>Add Product</h1>
+                        {{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                
+
+           
+     {{#if result}}         
+<form action="/admin/editproduct/{{result._id}}" id="edit" method="POST" enctype="multipart/form-data">
+{{else}}
+<form action="/admin/addproduct" id="add" method="POST" enctype="multipart/form-data">
+{{/if}}
+<h4 class="text-danger" id="err"></h4>
+<Label>Name</Label>
+<input type="text" name="name" id="name" value="{{result.name}}" class="form-control">
+<Label>Description</Label>
+<input type="text" name="description" id="description" value="{{result.description}}" class="form-control">
+<Label>Category</Label>
+<select name="category" class="form-control" id="category">
+    {{#if result}}
+<option  value="" selected disabled>{{result.category}}</option>
+    {{else}}
+    <option  value="zero" disabled selected>Choose category </option>
+    {{/if}}
+    {{#each category}}
+    <option  value="{{this.category}}">{{this.category}}</option>
+    {{/each}}
+</select>
+<Label >Price</Label>
+<input type="text"  name="price" id="price" value="{{result.price}}" class="form-control"> 
+<Label>Available Stock</Label>
+<input type="text" name="stock" id="stock" value="{{result.stock}}" class="form-control">
+<Label>Image</Label>
+  <img src="/product-images/{{result._id}}.jpg" alt="" style="width:100px;height:auto;" id="imgview"> 
+<input type="file" name="image" accept="image/*" value="{{result.image}}" onchange="viewimg(event)" class="form-control" id="file-input">
+ <div class="box-2 " id="a">
+      <div class="result"></div>
+    </div>
+    <!--rightbox-->
+    <div class="box-2 img-result hide" id="b">
+      <!-- result of crop -->
+      <img class="cropped" type="file" name="images" src="" alt="" />
+    </div>
+    <!-- input file -->
+    <div class="box">
+      <div class="options hide">
+        <input type="number" class="img-w d-none" value="300" min="100" max="400" />
+      </div>
+      <!-- save btn -->
+      <button class="btn save hide">Save</button>
+    </div>
+    
+{{!-- <img src="/product-images/{{result._id}}1.jpg" alt="" style="width:100px;height:auto;" id="imgviews">
+<input type="file" name="image1" value="{{result.image}}" onchange="viewimgs(event)" class="form-control">
+<img src="/product-images/{{result._id}}2.jpg" alt="" style="width:100px;height:auto;" id="imgviewser">
+<input type="file" name="image2" value="{{result.image}}" onchange="viewimges(event)" class="form-control"> --}}
+
+{{#if result}}
+<button style="width:100px;" type="submit" class="btn btn-success mt-3 mb-4">Edit</button>
+{{else}}
+<button style="width:100px;" type="submit" class="btn btn-success mt-3 mb-4">Add</button>
+{{/if}}
+</form>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+  function viewimg(event){
+       document.getElementById("imgview").src=URL.createObjectURL(event.target.files[0])
+        
+    }
+
+
+ 
+
+
+ /*let result = document.querySelector(".result"),
+    img_result = document.querySelector(".img-result"),
+    img_w = document.querySelector(".img-w"),
+    img_h = document.querySelector(".img-h"),
+    options = document.querySelector(".options"),
+    save = document.querySelector(".save"),
+    cropped = document.querySelector(".cropped"),
+    dwn = document.querySelector(".download"),
+    upload = document.querySelector("#file-input"),
+    cropper = "";
+    
+ 
+  // on change show image with crop options
+  upload.addEventListener("change", (e) => {
+    if (e.target.files.length) {
+        document.getElementById('a').style.display="block"
+        document.getElementById('b').style.display="none"
+         save.style.display="block"
+ 
+  
+      // start file reader
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target.result) {
+          // create new image
+          let img = document.createElement("img");
+          img.id = "image";
+       //   img.name='images'
+      img.src = e.target.result;
+          // clean result before
+          result.innerHTML = "";
+          // append new image
+          result.appendChild(img);
+          // show save btn and options
+          save.classList.remove("hide");
+          options.classList.remove("hide");
+          // init cropper
+          cropper = new Cropper(img);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  });
+ 
+  // save on click
+  save.addEventListener("click", (e) => {
+    e.preventDefault();
+    // get result to data uri
+    let imgSrc = cropper
+      .getCroppedCanvas({
+        width: img_w.value, // input value
+      })
+ .toDataURL();
+    // remove hide class of img
+  
+    cropped.classList.remove("hide");
+    img_result.classList.remove("hide");
+    // show image cropped
+   
+    cropped.src = imgSrc;
+  //  console.log(imgSrc)
+   
+  // document.querySelector("#file-input").file=imgSrc
+   // console.log(upload.src)
+    document.getElementById('b').style.display="block"
+  
+   document.getElementById('a').style.display="none"
+   save.style.display="none"
+    upload.value=imgSrc
+   // console.log(upload.value)
+  //  dwn.classList.remove("hide");
+  //  dwn.download = "imagename.png";
+  //  dwn.setAttribute("href", imgSrc);
+  });*/
+  //edit
+   document.getElementById('edit').addEventListener('submit',(e)=>{
+   console.log('sgdthdt')
+    let messages=[]
+    let errors=[]
+    let name=$('#name').val()
+    console.log(name)
+     let description=$('#description').val()
+      let price=$('#price').val()
+       let stock=$('#stock').val()
+     //   let category= $('input[name="category"]:checked').val();
+        let category=$('#category').val()
+        console.log(category)
+         let image1=$('#imgview').attr('src')
+         console.log(image1)
+           let file=$('#file-input').val()
+      //    let image2=$('#imgviews').attr('src')
+      //    console.log(image2)
+     //      let image3=$('#imgviewser').attr('src')
+        if(name=='' || description=='' || price=='' || stock==''|| category==null  )
+        //|| image2=='/product-images/1.jpg' || image3=='/product-images/2.jpg')
+        {
+            messages.push('All fields required')
+        }
+        if(messages.length>0){
+            e.preventDefault()
+            $('#err').html(messages.join(','))
+        }
+})
+
+/*
+
+let result = document.querySelector(".result"),
+    img_result = document.querySelector(".img-result"),
+    img_w = document.querySelector(".img-w"),
+    img_h = document.querySelector(".img-h"),
+    options = document.querySelector(".options"),
+    save = document.querySelector(".save"),
+    cropped = document.querySelector(".cropped"),
+    dwn = document.querySelector(".download"),
+    upload = document.querySelector("#file-input"),
+    cropper = "";
+    
+ 
+  // on change show image with crop options
+  upload.addEventListener("change", (e) => {
+    if (e.target.files.length) {
+        document.getElementById('a').style.display="block"
+        document.getElementById('b').style.display="none"
+         save.style.display="block"
+ 
+  
+      // start file reader
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target.result) {
+          // create new image
+          let img = document.createElement("img");
+          img.id = "image";
+       //   img.name='images'
+      img.src = e.target.result;
+          // clean result before
+          result.innerHTML = "";
+          // append new image
+          result.appendChild(img);
+          // show save btn and options
+          save.classList.remove("hide");
+          options.classList.remove("hide");
+          // init cropper
+          cropper = new Cropper(img);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  });
+ 
+  // save on click
+  save.addEventListener("click", (e) => {
+    e.preventDefault();
+    // get result to data uri
+    let imgSrc = cropper
+      .getCroppedCanvas({
+        width: img_w.value, // input value
+      })
+ .toDataURL();
+    // remove hide class of img
+  
+    cropped.classList.remove("hide");
+    img_result.classList.remove("hide");
+    // show image cropped
+   
+    cropped.src = imgSrc;
+   // upload.files=imgSrc
+  // document.querySelector("#file-input").file=imgSrc
+   // console.log(upload.src)
+    document.getElementById('b').style.display="block"
+  
+   document.getElementById('a').style.display="none"
+   save.style.display="none"
+  //  dwn.classList.remove("hide");
+  //  dwn.download = "imagename.png";
+  //  dwn.setAttribute("href", imgSrc);
+  });*/
+</script>
+<script>
+   document.getElementById('add').addEventListener('submit',(e)=>{
+    let messages=[]
+    let errors=[]
+    let name=$('#name').val()
+    console.log(name)
+     let description=$('#description').val()
+      let price=$('#price').val()
+       let stock=$('#stock').val()
+     //   let category= $('input[name="category"]:checked').val();
+        let category=$('#category').val()
+        console.log(category)
+         let image1=$('#imgview').attr('src')
+         console.log(image1)
+         let file=$('#file-input').val()
+         console.log(file)
+      //    let image2=$('#imgviews').attr('src')
+      //    console.log(image2)
+     //      let image3=$('#imgviewser').attr('src')
+        if(name=='' || description=='' || price=='' || stock==''|| category==null || file=='')
+        // image1=='/product-images/.jpg' )
+        //|| image2=='/product-images/1.jpg' || image3=='/product-images/2.jpg')
+        {
+            messages.push('All fields required')
+        }
+        if(messages.length>0){
+            e.preventDefault()
+            $('#err').html(messages.join(','))
+        }
+})
+
+</script>

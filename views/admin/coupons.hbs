@@ -1,0 +1,206 @@
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						
+						<h1>Coupon & Offers</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+    {{!-- demo --}}
+
+
+              <!--================ORDER Area =================-->
+    <section class="cart_area mt-4">
+        <div class="container">
+             <div class="text-center mt-2 mb-4">
+                <a href="/admin/addcoupon/" class="btncolor">Add Offer & Coupon</a>
+            </div>
+            <div class="text-center"
+            >
+<h3 style="text-decoration: underline;text-shadow: 40px;"class="mt-2 mb-4">Available Coupons</h3>
+
+            </div>
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Coupon Name</th>
+                                <th scope="col">Discount offer</th>
+                                
+                                <th scope="col">Min Purchase</th>
+                               <th scope="col">Max Discount</th>
+                                <th></th>
+                                {{!-- <th scope="col">Options</th> --}}
+                            </tr>
+                        </thead>                      
+                                           
+                        <tbody>
+                            {{#each coupons}}
+                            <tr id="{{this._id}}">
+                               
+                                <td>
+                                 
+                                  
+                                 
+                                    <div class="media">
+                                        <div class="d-flex">
+                                          <p class="mt-3"> {{this.name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="mt-3">{{this.offer}} %</p>
+                                           
+                                           
+                                        </div>
+                                    </div>
+                                </td>
+                               
+
+                                <td>
+                                    <a class="btn text-white  btn-dark"><i class="fa fa-rupee pr-1"></i>{{this.min}}\-</a>
+                                    
+                                </td>
+                                 <td>
+                                    <a class="btn text-white  btn-primary"><i class="fa fa-rupee pr-1"></i>{{this.max}}\-</a>
+                                </td>
+                                 <td ><button class="cancel mt-2 btncolor"   onclick=" deletecoupon('{{this._id}}')">Remove Coupon </button></td>
+						
+                         
+                            </tr>
+                               {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End ORDER Area =================-->
+
+          <!--================ORDER Area =================-->
+    <section class="cart_area mt-4">
+        <div class="container">
+                <div class="text-center"
+            >
+<h3 style="text-decoration: underline;text-shadow: 40px;"class="mt-2 mb-4">Available Offers</h3>
+
+            </div>
+            <div class="cart_inner">
+               
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Offer Name</th>
+                                <th scope="col">Discount offer</th>
+                                
+                               
+                               <th scope="col">Offer Category</th>
+                                <th></th>
+                                {{!-- <th scope="col">Options</th> --}}
+                            </tr>
+                        </thead>                      
+                                           
+                        <tbody>
+                            {{#each offers}}
+                            <tr id="{{this._id}}">
+                               
+                                <td>
+                                 
+                                  
+                                 
+                                    <div class="media">
+                                        <div class="d-flex">
+                                          <p class="mt-3"> {{this.cname}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="media">
+                                        <div class="media-body">
+                                        <a class="btn text-white  btn-dark">{{this.coffer}} %</a>
+                                           
+                                           
+                                        </div>
+                                    </div>
+                                </td>
+                               
+
+                                <td>
+                                    <p class="mt-3">{{this.category}}</p>
+                                    
+                                </td>
+                               
+                                 <td ><button class="cancel mt-2 btncolor"   onclick=" deleteoffer('{{this._id}}','{{this.category}}')">Remove Offer </button></td>
+						
+                         
+                            </tr>
+                               {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:10px; "
+    id="cartAddedMessage" role="alert">
+    <strong>Offer deleted successfully  <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+  <div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:10px; "
+    id="couponAddedMessage" role="alert">
+    <strong>Coupon deleted successfully  <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    </section>
+    <!--================End ORDER Area =================-->
+<script>
+    function deletecoupon(id){
+        $.ajax({
+            url:`/admin/deletecoupon/${id}`,
+            method:'get',
+            success:(result=>{
+                if(result.status){
+             $(`#${id}`).hide()
+              $('#couponAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 3000)
+           }   })
+        })
+    }
+     function deleteoffer(id,category){
+        $.ajax({
+            url:`/admin/deleteoffer`,
+            method:'post',
+            
+            data:{
+                id,category
+            },
+            success:(result=>{
+                if(result.status){
+             $(`#${id}`).hide()
+              $('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 3000)
+                }
+            })
+        })
+    }
+</script>

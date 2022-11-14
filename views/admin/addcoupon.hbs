@@ -1,0 +1,220 @@
+<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1 class="text-center">Add Coupon</h1>
+                      
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+ 
+                {{!--test  --}}
+<div class="alert alert-primary alert-dismissible fade " style="position: fixed;z-index: 100; top:18.5rem; left:10px; "
+    id="cartAddedMessage" role="alert">
+    <strong>Coupon added successfully <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-primary alert-dismissible fade " style="position: fixed;z-index: 100; top:18.5rem; left:10px; "
+    id="offerAddedMessage" role="alert">
+    <strong>Offer added successfully <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    <div class="container mt-4">
+        <div class="row">
+            
+   <div class="col-md-6">    
+    
+<div class="col-md-6">
+<h5 class="text-danger" id="err"></h5>
+<Label class="col-12 p-0 m-0 my-1">Coupon Name</Label>
+<input class="col-12" type="text" name="name" id="name"  >
+</div>
+<div class="col-md-6">
+<Label class="col-12 p-0 m-0 my-1">Offer Percentage</Label>
+<input class="col-12" type="text" name="offer" id="offer" >
+</div>
+<h6 class="text-danger col-12" id="offererr"></h6>
+
+<div class="col-md-6">
+<label class="col-12 p-0 m-0 my-1">Min. Purchase</label>
+<input class="col-12"type="text" name="min" id="min" >
+</div>
+<h6 class="text-danger col-12" id="minerr"></h6>
+
+<div class="col-md-6">
+<Label class="col-12 p-0 m-0 my-1">Max discount</Label>
+<input class="col-12"type="text"  name="max" id="max" > 
+ </div>
+  <h6 class="text-danger col-12" id="maxerr"></h6> 
+  
+<div class="col-md-6">
+<button onclick="addcoupon()"style="width:100px;" type="submit" class="btn btn-success mt-3 mb-4">Add</button>
+</div>
+ 
+
+        </div>
+        
+<div class="col-md-6">
+  
+    <div class="col-md-6">
+    <h5 class="text-danger" id="cerr"></h5>
+<Label class="col-12 p-0 m-0 my-1">Coupon Name</Label>
+<input class="col-12"type="text" name="cname" id="cname"  >
+</div>
+<div class="col-md-6">
+<Label class="col-12 p-0 m-0 my-1">Offer Percentage</Label>
+<input class="col-12"type="text" name="coffer" id="coffer" >
+</div>
+<h5 class="text-danger mt-2 m-0 p-0 col-12" id="coffererr"></h5>
+
+<div class="col-md-6">
+    <Label class="col-12 p-0 m-0 mb-1">Category</Label>
+<select class="col-12" name="category" id="category">Category
+<option value="" selected disabled></option>
+{{#each category}}
+<option value="{{this.category}}">{{this.category}}</option>
+{{/each}}
+</select>
+</div>
+<h5 class="text-danger col-12" id="ccaterr"></h5>
+
+<div class="col-md-6">
+<button onclick="addoffer()"style="width:100px;" type="submit" class="btn btn-success mt-3 mb-4">Add</button>
+</div>
+ 
+{{!-- </form> --}}
+           
+        </div>
+    </div>
+</section>
+<script>
+    function addcoupon(){
+
+   
+//$('#addcoupon').submit(e=>{
+   let name =$('#name').val()
+   
+    let offer=$('#offer').val()
+     let min =$('#min').val()
+      let max =$('#max').val()
+   let messages=[]
+   let namemessages=[]
+   let offermessages=[]
+   let minmessages=[]
+   let maxmessages=[]
+   
+   if(name=="" || offer=='' || min=='' || max==''){
+    messages.push('All fields required')
+   }
+   else{
+    if(isNaN( offer)){
+        offermessages.push('This field cannot contain alphabet')
+    }
+     if(isNaN( max)){
+        maxmessages.push('This field cannot contain alphabet')
+    }
+     if(isNaN( min)){
+        minmessages.push('This field cannot contain alphabet')
+    }
+   }
+   if(messages.length>0 || namemessages.length>0 || minmessages.length>0 || maxmessages.length>0 || offermessages.length>0){
+   // e.preventDefault()
+   $('#err').html(messages.join(','))
+    $('#offererr').html(offermessages.join(','))
+    $('#minerr').html(minmessages.join(','))
+    $('#maxerr').html(maxmessages.join(','))
+   
+   }
+   else{
+   // e.preventDefault()
+    console.log(name)
+    $.ajax({
+        url:'/admin/addcoupon',
+        method:'post',
+        data:
+          { name,offer,min,max}
+        ,
+        success:(()=>{
+ $('#err').hide()
+ $('#offererr').hide()
+  $('#minerr').hide()
+  $('#maxerr').hide()
+ $('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 3000)
+              
+        })
+   })
+   }
+}
+//)
+  //  }
+
+    
+    function addoffer(){
+    //    $('#addoffer').submit(e=>{
+   let name =$('#cname').val()
+   console.log(name)
+    let offer=$('#coffer').val()
+    console.log(offer)
+  
+    let category=$('#category').val()
+    console.log(category)
+   let messages=[]
+   let names=[]
+  
+   console.log(name)
+   if(name=="" || offer=='' || category==null){
+    messages.push('All fields required')
+   }
+   else if(isNaN(offer)){
+        names.push('This field cannot contain alphabet')
+    }
+    
+   
+   if(messages.length>0 || names.length>0 ){
+  //  e.preventDefault()
+   console.log('dgdsg')
+  
+   $('#cerr').html(messages.join(','))
+    $('#coffererr').html(names.join(','))
+  
+   }
+   else{
+  //  e.preventDefault()
+    $.ajax({
+        url:'/admin/addoffer',
+        method:'post',
+        data:
+            {cname:name,
+            coffer:offer,
+            category:category},
+        success:(()=>{
+ $('#cerr').hide()
+ $('#coffererr').hide()
+ 
+ $('#offerAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#offerAddedMessage').removeClass('show')
+                }, 3000)
+               
+        })
+   })
+   }
+}
+
+
+    
+</script>

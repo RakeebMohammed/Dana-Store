@@ -1,0 +1,98 @@
+<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="/">
+								<img style="height:70px;width:100px;" src="/images/danastore1.png" alt="">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li class="current-list-item"><a href="/">Home</a>
+									
+								</li>
+								<li><a href="/about">About</a></li>
+								
+							
+								
+								<li><a href="/contact">Contact</a></li>
+									{{#if user}}
+									<li><a >{{user.username}}</a>
+									<ul class="sub-menu">
+										<li><a href="/profile">Profile</a></li>
+										<li><a href="/orders">Orders</a></li>
+										<li><a href="/wishlist">Wishlists</a></li>
+										<li><a href="/logout">Logout</a></li>
+									</ul>
+								</li>
+								{{else}}
+								<li><a >Account</a>
+									<ul class="sub-menu">
+										<li><a href="/login">Login</a></li>
+										<li><a href="/signup">Signup</a></li>
+									</ul>
+								</li>
+								{{/if}}
+								<li>
+									<div class="header-icons">
+										{{#if user}}
+										<a href='/cart'class="shopping-cart" onclick="return show()"><i class="fas fa-shopping-cart"></i><span style="height:14px;" id="cart-count" class="ml-1 badge badge-light">{{cartcount}}</span></a>
+										{{/if}}
+									{{#if index}}	<a  class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									{{/if}}
+									</div>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+					
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+    
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<form action="/search" method="POST">
+							<input type="text" placeholder="Keywords" name="search">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search arewa -->
+	
+<script>
+	function show(){
+		//$('.search-bar').show()
+	}
+</script>

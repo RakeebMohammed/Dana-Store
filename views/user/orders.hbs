@@ -1,0 +1,146 @@
+<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>Orders</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+{{!-- demo --}}
+<!--================ORDER Area =================-->
+    <section class="cart_area mt-4">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order Details</th>
+                                <th scope="col">Address</th>
+                                
+                                <th scope="col">Details</th>
+                               <th scope="col">Status</th>
+                                <th></th>
+                                {{!-- <th scope="col">Options</th> --}}
+                            </tr>
+                        </thead>                      
+                                           
+                        <tbody>
+                           {{#each result}}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                           <p>Placed At: <br> {{this.OrderedDate}}</p><br>
+                                        </div>
+                                    </div>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                           <p>Amount: <br><i class="fa fa-rupee pr-1"></i> {{this.Amount}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="media">
+                                        <div class="d-flex flex-row">
+                                          <p>Payment Method: <br>
+                                         {{this.PaymentMethod}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p>{{this.DeliveryDetails.name}}</p>
+                                            <p>{{this.DeliveryDetails.phone_number}}</p>
+                                            <p>{{this.DeliveryDetails.email}}</p>
+                                            <p>{{this.DeliveryDetails.label}}</p>
+                                            <p>{{this.DeliveryDetails.pincode}}</p>
+                                           
+                                        </div>
+                                    </div>
+                                </td>
+                               
+
+                                <td>
+                                    <a class="btn  btn-dark" href="/orderdetails/{{this._id}}">Details</a>
+                                    
+                                </td>
+                                 <td>
+                                    <h5  class="index mt-4"id="index{{this._id}}">{{this.PaymentStatus}}</h5>
+                                </td>
+                                 <td ><button class="cancel mt-2 btncolor" id="{{this._id}}"  onclick=" deleteorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}','{{this.Amount}}','{{this.PaymentMethod}}')">Cancel order</button>
+						<button class="return mt-2 btncolorchange hide" id="return{{this._id}}"  onclick=" returnorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}')">Return order</button></td>
+						
+                                {{!-- <td>
+                                    <a class="btn btn-link btn-light" href="/cancel-order-products/{{this._id}}">Cancel</a>
+                                </td> --}}
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade " style="position: fixed;z-index: 100; top:8rem; left:1rem; "
+    id="deleteAddedMessage" role="alert">
+    <strong>Order cancelled successfully <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    </section>
+    <!--================End ORDER Area =================-->
+{{!-- end demo --}}
+ 
+
+	   <script>
+		$(document).ready(function(){
+			let cancel=document.querySelectorAll('.cancel') 
+	 let index=document.querySelectorAll('.index') 
+		let returned=document.querySelectorAll('.return')
+        console.log(index);
+		for(i=0;i<index.length;i++){
+			number=index[i].innerHTML
+		if(number=='Cancelled'){
+           cancel[i].style.display="none"
+		}
+        if(number=='Delivered'){
+              cancel[i].style.display="none"
+		  returned[i].style.display="block"
+        }
+		}
+		})
+            function deleteorder(user,order,product,amount,method)
+            {
+                
+                $.ajax({
+                    url:'/deleteorder',
+                    method:'post',
+                    data:{userId:user,
+					orderId:order,
+                    productId:product,amount,method},
+                    success:(result)=>{
+						if(result.status)
+             $('#deleteAddedMessage').show()
+               $('#deleteAddedMessage').addClass('show')
+			   $('#'+order).hide()
+			   $('#index'+order).html("Cancelled")
+                setTimeout(()=>{
+                   $('#deleteAddedMessage').removeClass('show')
+                
+                },4000)
+                    }
+                })
+            }
+        </script  > 
+		  
+		  
+		
+
+        

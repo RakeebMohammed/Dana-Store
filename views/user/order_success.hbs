@@ -1,0 +1,68 @@
+
+    
+
+<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+					
+						<h1>Order-Summary</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row text-center">
+   <div class="h-50 w-100 mt-5 mb-5">
+    <div class="text-center mb-5">
+        <h2 class="text-success">SUCCESS</h2>
+    </div>
+    <h3>Thanks for your order ,{{user.username}} </h3>
+    <h5> We will reach you soon</h5>
+    <a style="text-decoration:underline;color:black;"  href="/orders">Go back to your orders</a>
+   </div>
+   </div>
+   </div>
+   {{!-- demo --}}
+   <!--================Order Details Area =================-->
+
+
+ <section class="order_details section_gap">
+	<div class="container">
+		
+
+		<div class="row order_d_inner">
+			<div class="col-lg-6">
+				<div class="details_item">
+					<h4>Order Info :</h4>
+					<hr>
+					<ul class="list ">
+						<li><h5 class="my-3 "href="#"><span>Order ID</span> : {{orders._id}}</h5></li>
+						<li><h5 class="my-3 " href="#"><span>Date</span> : {{orders.OrderedDate}}</h5></li>
+						<li><h5 class="my-3 " href="#"><span>Total</span> :<i class="fa fa-rupee pr-1"></i> {{orders.Amount}}</h5></li>
+						<li><h5  class="my-3 " href="#"><span>Payment method</span> : {{orders.PaymentMethod}}</h5></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="details_item">
+					<h4>Billing Address :</h4>
+					<hr>
+					<ul class="list">
+						<li><h5 class="my-3 " href="#"><span>Street</span> : {{orders.DeliveryDetails.label}}</h5></li>
+						<li><h5 class="my-3 " href="#"><span>City</span> : {{orders.DeliveryDetails.city}}</h5></li>
+						<li><h5 class="my-3 " href="#"><span>Postcode </span> : {{orders.DeliveryDetails.pincode}}</h5></li>
+						<li><h5 class="my-3 " href="#"><span>Mobile</span> : {{orders.DeliveryDetails.phone_number}}</h5></li>
+					</ul>
+				</div>
+			</div>	
+			
+		</div>
+	
+	</div>
+</section>
+
+<!--================End Order Details Area =================-->
+  

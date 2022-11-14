@@ -1,0 +1,151 @@
+<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						
+						<h1>All Orders</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+<div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
+    id="successs" role="alert">
+    <strong>Order Status changed successfully <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+<div class="cart-section mt-5 mb-5">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+					{{!-- <p class="text-success text-center" id="successs"></p> --}}
+					<div class="cart-table-wrap">
+						<table class="cart-table  table-sm-responsive">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									<th class="product-image ">No.</th>
+									<th class="product-image">Name</th>
+								<th class="product-image">Email</th>
+							 <th class="product-price">Address</th>
+
+									<th class="product-quantity">Amount Paid</th>
+                                    <th class="product-price">Ordered Date</th>
+                                    	
+                                        	<th class="product-price">Payment Method</th>
+                                          	<th  class="product-total">Products </th>
+										    <th class="product-price">Order Status</th>
+									
+									<th class="product-total"></th>
+								</tr>
+							</thead>
+							<tbody>
+								{{#each result}}
+								<tr class="table-body-row ">
+									<td class="product-name index"></td>
+									
+									<td class="product-name">{{this.DeliveryDetails.name}}</td>
+                                    <td class="product-name">{{this.DeliveryDetails.email}}</td>
+									 <td class="product-name">{{this.DeliveryDetails.label}}</td>
+									
+									<td class="product-name">{{this.Amount}}</td>
+									 <td class="product-price">{{this.OrderedDate}}</td>
+                                  
+								    <td class="product-name">{{this.PaymentMethod}}</td>
+     <td class="product-name"><a href="/admin/orderdetails/{{this._id}}">View products</a></td>
+     
+	 <td>
+
+										{{!-- <a href="" onclick="return cancelorder('{{this.UserId}}','{{this._id}}')">Cancel order</a> --}}
+
+	<select name="change" id={{this._id}}>
+		<option  >{{this.PaymentStatus}}</option>	
+<option value="Placed">Placed</option>
+  <option value="Pending">Pending</option>
+  <option value="Cancelled">Cancelled</option>
+  <option value="Shipped">Shipped</option>
+ <option value="Delivered">Delivered</option>
+  </select>	
+
+ 
+										</td>
+									 <td class="product-name"><button id='button{{this._id}}'class="btn btn-dark" onclick="changeorder('{{this._id}}')" type="submit" id="change">Change</button></td>
+                              
+								 {{/each}}
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+			
+        </div>
+        <script>
+
+
+ 
+           function changeorder(order)
+            {
+           let value=  document.getElementById(order).value
+        console.log(value)
+	
+                $.ajax({
+                    url:'/admin/deleteorder',
+                    method:'post',
+                    data:{
+                    orderId:order,
+					change:value},
+                
+                    success:(result)=>{
+						if(result.status){
+    
+$('#'+order).val(value)
+if(value=="Delivered" || value== 'Cancelled'){
+$('#button'+order).hide()
+}
+//document.getElementById(order).value=0
+				$('#successs').addClass('show')
+				setTimeout(()=>{
+					$('#successs').removeClass('show')
+				},4000)
+			
+ 
+				}
+					}
+				
+                })
+			}
+		
+ $(document).ready(function (){
+let index= document.querySelectorAll('.index')
+console.log(index)
+ for(i=0;i<index.length;i++){
+  index[i].innerHTML=i+1
+ }
+
+ let btn=document.querySelectorAll('.btn')
+ 
+	{{#each result}}
+	console.log('{{this._id}}')
+ status=	$(`#{{this._id}}`).val()
+console.log(status)
+
+	if(status== 'Delivered' || status=='Cancelled'){
+console.log('dgsdgsd')
+	btn[{{@index}}].style.display="none"
+ }
+ else{
+	btn[{{@index}}].style.display="block"
+ }
+  
+ {{/each}}
+ })
+        </script>

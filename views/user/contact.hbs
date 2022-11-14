@@ -1,0 +1,157 @@
+
+<body>
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+					
+						<h1>Contact</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- contact form -->
+	<div class="contact-from-section mt-50 mb-50 mt-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7 mb-5 mb-lg-0">
+					<div class="form-title">
+						<h2>Have you any question?</h2>
+						
+					</div>
+				 	<div id="status"></div>
+					 <div class="billing-address-form pt-0">
+						
+						<form  id="status-form" >
+							<h5 class="text-danger " id="error"></h5>
+								
+							<p><input type="text" placeholder="Name"  name="name" id="name1"></p>
+							<h5 class="text-danger " id="error2"></h5>
+							
+							<p>	<input type="email" placeholder="Email" name="email" id="email1"></p>
+									
+								
+							<h5 class="text-danger " id="error3"></h5>
+								
+							
+							<p>
+								<input type="tel" placeholder="Phone" name="phone_number" id="phone_number1"></p>
+							<h5 class="text-danger " id="error4"></h5>
+							<p>	<input type="text" placeholder="Subject" name="subject" id="subject1"></p>
+								
+							
+							
+							<p><textarea name="message" id="message1" cols="30" rows="0" placeholder="Message"></textarea></p>
+						<button class="btncolor mt-2 mb-2" type="submit">Submit</button></form>
+					</div>
+				</div>
+				<div class="col-lg-5">
+					<div class="contact-form-wrap">
+						<div class="contact-form-box">
+							<h4><i class="fas fa-map"></i> Shop Address</h4>
+							<p>27/23, Dana Store <br> P.O. Paravanadukkam <br> Kasaragod <br>Kerala <br>India</p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="far fa-clock"></i> Shop Hours</h4>
+							<p>MON - SAT: 9 to 8 PM <br> SUN: 0 to 7 PM </p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="fas fa-address-book"></i> Contact</h4>
+							<p>Phone: +9 902004275 <br> Email: rkbmohd@gmail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end contact form -->
+
+	<!-- find our location -->
+	
+	<!-- end find our location -->
+
+	<!-- google map section -->
+	
+	<!-- end google map section -->
+
+
+	
+	
+	
+</body>
+<script>
+console.log('sdgsdg')
+$('#status-form').submit(e=>{
+
+
+let name=$("#name1").val()
+console.log(name)
+let email=$("#email1").val()
+console.log(name)
+let msg=$('#message1').val()
+let phone=$("#phone_number1").val()
+
+
+let messages=[]
+		let nameWarning=[]
+		let emailWarning=[]
+		let phoneWarning=[]
+		
+	
+		if(name=='' || email=="" || phone=='' || msg==''  ){
+			console.log("hiii")
+      messages.push('All fields Required!')
+		}
+		else 
+		{
+			if(name.length<4 ){
+			nameWarning.push('Name must be 4 characters')
+		
+			}
+			else if (!isNaN(name)){
+    nameWarning.push('Name cannot be number')
+  }
+		  if(email){
+			console.log(email)
+		 var emailed =  /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var validEmail = emailed.test(email);
+      if (!validEmail) {
+       emailWarning.push('Enter valid email')
+      }
+    	
+		}
+       if(phone)
+    {
+		console.log(phone)
+ var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      var validnumber = phoneno.test(phone);
+      if (!validnumber) {
+       phoneWarning.push('Enter valid number')
+      }
+    }
+	
+	}
+	
+if( messages.length>0 ||
+	 nameWarning.length>0 ||
+	 emailWarning.length>0 ||
+	 phoneWarning.length>0
+	
+  )
+{
+	e.preventDefault()
+  $('#error').html(messages.join(','))
+   $('#error2').html(nameWarning.join(','))
+    $('#error3').html(emailWarning.join(','))
+	 $('#error4').html(phoneWarning.join(','))
+
+}
+
+})	
+</script>

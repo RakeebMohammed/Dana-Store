@@ -1,0 +1,133 @@
+
+ <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>Banners</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container mt-4 mb-4">
+        <div class="row ">
+         <div class="col-md-12 ">
+            <form action="/admin/addbanner" id="addbanner"  method='POST' enctype="multipart/form-data">
+                <h6 class="text-danger" id="err"></h6>
+          <label class=""for="">Image :</label>
+            <input type="file" name="image" accept="image/*"   class="col-md-4" id="image">
+ <label class="me-2" for="">Description :</label>
+ <input type="text" class="col-md-3 mr-4" name="description" id="description">
+ {{!-- <input type="text" name="aaro"> --}}
+ <button class="btncolor " type="submit"  class="mt-1">Add</button>
+ </form>
+ </div>
+        </div>
+    </div>
+  <section class="cart_area mt-4">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Description</th>
+                                
+                                <th scope="col">Details</th>
+                             
+                                <th></th>
+                              
+                            </tr>
+                        </thead>                      
+                                           
+                        <tbody>
+                           {{#each result}}
+                            <tr  id="{{this._id}}">
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                        <img style="height:70px;" src="/product-images/{{this._id}}.jpg" alt="">   
+                                        </div>
+                                    </div>
+                                   
+                                 
+                                </td>
+                                <td>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p class="mt-3">{{this.description}}</p>
+                                         
+                                           
+                                        </div>
+                                    </div>
+                                </td>
+                               
+
+                                 <td ><button class="cancel mt-2 btncolor"   onclick=" activatebanner('{{this._id}}')">Activate</button></td>
+						
+                                
+                                
+                                 <td ><button class="cancel mt-2 btncolor"   onclick="deletebanner('{{this._id}}')">Delete banner</button></td>
+						
+                                {{!-- <td>
+                                    <a class="btn btn-link btn-light" href="/cancel-order-products/{{this._id}}">Cancel</a>
+                                </td> --}}
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+             <div class="alert alert-danger alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:10px; "
+    id="cartAddedMessage" role="alert">
+    <strong>Banner deleted successfully  <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+    </section>
+    <!--================End ORDER Area =================-->
+
+    <script>
+       // function addbanner(){
+            $('#addbanner').submit(e=>{
+ let des=$('#description').val()
+ console.log(des)
+         let image=   $('#image').val()
+         let msg=[]
+         if(des=='' || image==''){
+msg.push('All fields required')
+         }
+         if(msg.length>0){
+            e.preventDefault()
+            $('#err').html(msg.join(''))
+         }
+    
+
+            })
+       
+      function deletebanner(id){
+        $.ajax({
+            url:`/admin/deletebanner/${id}`,
+            method:'get',
+            success:(res)=>{
+                if(res.status){
+                    $(`#${id}`).hide()
+                $('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 3000)
+                }
+                else{
+                    $('#err').html('An error occured')
+                }
+            }
+        })
+      }
+    </script>

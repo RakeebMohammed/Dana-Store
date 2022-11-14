@@ -1,0 +1,88 @@
+<body  >
+    <div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row ">
+			<div class="col-lg-8 offset-lg-2   text-center">
+					<div class="breadcrumb-text ">
+						
+						<h1>All Category</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+   {{#if category}}
+      {{#each category}}
+       <form action="/admin/editcategory/{{this.category}}" method="POST" id="categoryform">
+     <div class="d-flex justify-content-center my-4 col-12">
+        <input type="text" name="category" value="{{this.category}}" id="categoryedit" class="form-control form-control-lg col-2 r" />
+             
+     </div>
+    <div  class="text-center  mr-3 mb-5">
+             <h4 class="text-danger">{{Err}}</h4>   
+         <a class="my-4 " href=""><button class="btn btn-primary">Edit Category</button></a>
+      
+    </div>
+      </form> 
+      {{/each}}
+      {{else}}
+       <form action="/admin/insertcategory" method="POST" id="form">
+     <div class=" d-flex justify-content-center my-4">
+        <input type="text" name="category" id="category" class="form-control form-control-lg col-2 r" />
+             
+     </div>
+    <div  class="text-center  mr-3 mb-5">
+             <h4 id="err"class="text-danger">{{Err}}</h4>   
+         <a class="my-4 " href=""><button type="submit" class="btn btn-success">Add new Category</button></a>
+      
+    </div>
+      </form> 
+      
+      {{/if}}
+   
+       <div class="container">
+        <div class="row">
+
+    
+{{#each result}}
+<div class="'col-md-12">
+<ul class="col-md-12  ">
+  <li class="col-md-12 ">
+           <a  class="" style="text-decoration:none;width:300px;" href="/admin/categoryselect/{{this.category}}"><h3 class="text-dark " style="height:50px;">{{this.category}}</h3>
+                </a>
+        
+
+
+
+
+          <a class="" href="/admin/editcategory/{{this._id}}"><button  type="button" style="border-radius:30px;" class="btn btn-success mx-5">Edit</button></a>
+ <a class="" href="/admin/deletecategory/{{this.category}}"><button  type="button" style="border-radius:30px;" class="btn btn-danger ">Delete</button></a>
+
+      
+
+
+    </li>
+</ul>
+</div>
+ {{/each}}
+ 
+ </div>
+       </div>   
+          
+</body>
+<script>
+document.getElementById('form').addEventListener('submit',(e)=>{
+ let category=  $('#category').val()
+ let messages=[]
+   if(category==''){
+      messages.push('Category cant be empty')
+   }
+   if(messages.length>0){
+      e.preventDefault()
+      $('#err').html(messages.join(' '))
+   }
+})
+
+
+</script>

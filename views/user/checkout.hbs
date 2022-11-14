@@ -1,0 +1,987 @@
+<style>
+	/* Just to play with animations */
+.copiedtext {
+  position: absolute;
+  left: 0; top: 0; right: 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-1em);
+  color: #000;
+  transition: all .500s;
+}
+.copied .copiedtext {
+  opacity: 1;
+  transform: translateY(-4em);
+}
+
+/* Some Generic styles */
+
+h1 {
+  margin: 1.75em auto 1.25em;
+}
+.buttonesh {
+  font-size: 1em;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+[id="cleared"] {
+  margin-top: 4em;
+}
+
+.buttonesh {
+  position: relative;
+  padding: 8px 10px;
+  border: 2px dotted black;
+  font-size: 0.835em;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+  font-weight: bold;
+  color: #000;
+  background: #fff;
+  transition: background .275s;
+}
+.buttonesh:hover,
+.buttonesh:focus {
+  background: #EA2237;
+  color: #fff;
+  cursor: pointer;
+}
+
+</style>
+
+<section>
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+							
+				<div class="col-lg-8 offset-lg-2 text-center">
+	
+					<div class="breadcrumb-text">
+						<h1>Check Out Product</h1>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- check out section -->
+	<div class="checkout-section  ">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+<h5 class="text-danger" id="errpay"></h5>
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample">
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingOne">
+								<h4 class="text-danger" id="err"></h4>
+						        	
+						      <h5 class="">
+						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          Billing Address
+						        </button>
+						      </h5>
+						    </div>
+
+						    <div id="collapseOne" class="collapse show " aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body ">
+						        <div class="billing-address-form pt-0">
+									<form action="" id="shipping-form" class="">
+									
+										<input type="radio" class="  " value="a" id="add1" name="radio">
+										
+						        		<p><input name="name" id="nameu" type="text" placeholder="Name" class=" "></p>
+										<p class="text-danger" id="nameerr"></p>
+						        		<p><input name="email" id="emailu" type="email" placeholder="Email"></p>
+										<p class="text-danger" id="emailerr"></p>
+											<p><input name="phone" id="phoneu" type="number" placeholder="Phone"></p>
+						        	<p class="text-danger" id="phoneerr"></p>
+						        		<p><input  name="address" id="addressu" type="text" placeholder="Address"></p>
+										<p><input name="pincode" id="pincodeu" type="text" placeholder="Pincode"></p>
+										<p class="text-danger" id="pincodeerr"></p>
+						        		<p><input name="city" id="cityu" type="text" placeholder="City"></p>
+						        		{{!-- <p><input  name="state" id="state" type="text" placeholder="State"></p> --}}
+						        
+                <select style="height:60px;"name="state" id="stateu" class="form-control" placeholder="State">
+                    <option value="" selected disabled>Select State</option>
+<option value="Andhra Pradesh">Andhra Pradesh</option>
+<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+<option value="Assam">Assam</option>
+<option value="Bihar">Bihar</option>
+<option value="Chandigarh">Chandigarh</option>
+<option value="Chhattisgarh">Chhattisgarh</option>
+<option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+<option value="Daman and Diu">Daman and Diu</option>
+<option value="Delhi">Delhi</option>
+<option value="Lakshadweep">Lakshadweep</option>
+<option value="Puducherry">Puducherry</option>
+<option value="Goa">Goa</option>
+<option value="Gujarat">Gujarat</option>
+<option value="Haryana">Haryana</option>
+<option value="Himachal Pradesh">Himachal Pradesh</option>
+<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+<option value="Jharkhand">Jharkhand</option>
+<option value="Karnataka">Karnataka</option>
+<option value="Kerala">Kerala</option>
+<option value="Madhya Pradesh">Madhya Pradesh</option>
+<option value="Maharashtra">Maharashtra</option>
+<option value="Manipur">Manipur</option>
+<option value="Meghalaya">Meghalaya</option>
+<option value="Mizoram">Mizoram</option>
+<option value="Nagaland">Nagaland</option>
+<option value="Odisha">Odisha</option>
+<option value="Punjab">Punjab</option>
+<option value="Rajasthan">Rajasthan</option>
+<option value="Sikkim">Sikkim</option>
+<option value="Tamil Nadu">Tamil Nadu</option>
+<option value="Telangana">Telangana</option>
+<option value="Tripura">Tripura</option>
+<option value="Uttar Pradesh">Uttar Pradesh</option>
+<option value="Uttarakhand">Uttarakhand</option>
+<option value="West Bengal">West Bengal</option>
+</select>
+									<p><input type="text" name="userid" value="{{user._id}}" hidden></p>
+									
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingTwo">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						          Saved Address
+						        </button>
+						      </h5>
+						    </div>
+							 
+						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						      <div class="card-body">
+						        <div class="shipping-address-form">
+						        	<p>Your shipping address form is here.</p>
+									{{#each address}}
+									<div id="{{@index}}">
+									<div class="d-flex justify-content-between">
+									<input type="radio" class=" "value="{{@index}}" name="radio">
+								<i class="fa fa-trash  " style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal{{@index}}" ></i>
+								</div>
+									<input name="name" disabled id="name" type="text" placeholder="Name" value="{{this.address.name}}"  class="form-control mt-2"></p>
+						        		<p><input name="email" disabled id="email" type="email" placeholder="Email" value="{{this.address.email}}"  class="form-control my-2"></p>
+											<p><input name="phone"disabled  id="phone" type="text" placeholder="Phone"  value="{{this.address.phone_number}}" class="form-control my-2"></p>
+						        	
+						        		<p><input  name="address" disabled id="address" type="text" placeholder="Address"  value="{{this.address.label}}" class="form-control my-2"></p>
+										<p><input name="pincode" disabled id="pincode" type="text" placeholder="Pincode" value="{{this.address.pincode}}"  class="form-control my-2"></p>
+						        		<p><input name="city" disabled  id="city" type="text" placeholder="City"  value="{{this.address.city}}" class="form-control my-2"></p>
+						        		<p><input  name="state"disabled id="state" type="text" placeholder="State"  value="{{this.address.state}}" class="form-control my-2"></p>
+									</div>
+							  	{{!-- modal --}}
+						         <div class="modal fade" id="exampleModal{{@index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Confirmation meassage</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        Are you sure to delete this address ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+     <button type="button" class="btn btn-danger" onclick="addresssdelete('{{this.address.name}}','{{this.address.email}}','{{this.address.phone_number}}','{{this.address.label}}','{{this.address.pincode}}','{{this.address.city}}','{{this.address.state}}','{{this._id}}','{{@index}}')">Delete</button></a>
+               
+           
+        
+    
+      </div>
+    </div>
+  </div>
+  </div>
+  
+						{{!-- modal --}}
+	
+							    {{/each}}
+              
+				
+
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+			
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingThree">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="modal" data-target=".bd-example-modal-lg">Add New Address</button>
+						         
+
+						      </h5>
+						    </div>
+						  
+						  </div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-5">
+					<div class="order-details-wrap mt-4">
+						<table class="order-details table-responsive">
+							<thead>
+								<tr class="text-center">
+									<th> Details</th>
+									<th>Qty</th>
+									<th>Price</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							
+							<tbody class="order-details-body p-0 m-0">
+								{{#each result}}
+								<tr class="text-center font-weight-normal p-0 m-0">
+									<td class="col-5">{{this.name}}</td>
+									<td class="col-1">{{this.quantity}}</td>
+									<td class="col-3"><i class="fa fa-rupee pr-1"></i><span >{{this.price}}/-</span></td>
+									<td class="col-3"><i class="fa fa-rupee pr-1"></i><span id="sub">{{this.subtotal}}</span>/-</td>
+								</tr>
+								{{/each}}
+							</tbody>
+							<tbody class="checkout-details">
+								
+								
+								<tr class="text-center">
+									<td>Discount</td>
+									<td></td>
+									<td></td>
+									<td class="tect-success"><i class="fa fa-rupee pr-1 text-success"></i><span class="text-success" id="coupon"></span>/-</td>
+								</tr>
+								<tr class="text-center  ">
+									<td>Total</td>
+									<td></td>
+									<td></td>
+									<td ><i class="fa fa-rupee pr-1"></i> <span id="total"> {{totalAmount}}</span>/- </td>
+									
+								</tr>
+							</tbody>
+						</table>
+				
+						{{!-- coupon --}}
+<div class="coupon-section">
+						<h3>Apply Coupon</h3>
+						<div class="coupon-form-wrap d-flex ">
+							
+								<input class="p-2 col-6"type="text" id="coup" name="coupon" placeholder="Coupon">
+							
+							<a onclick="return apply()"  class="mx-4 btncolor text-white">Apply</a>
+							
+						
+						</div>
+{{!-- coupon end --}}<h5 class="text-danger mt-3" id="couperror"></h5>
+{{!-- test --}}
+   {{!-- <div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample2">
+						  <div class="card single-accordion">
+        
+        <div class="card single-accordion">
+						    <div class="card-header" id="headingOne">
+						      <h5 class="mb-0">
+						       
+                                <button class=" collapsed " type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+						          Available Coupons:
+       
+       
+						        </button> 
+						      </h5>
+						    </div>
+        </div></div></div></div>
+	 <div id="collapseTen" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample2">
+						      <div class="card-body">	 --}}
+{{#each coupons}}
+<div class="container mt-2">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-12">
+            <div style="height:130px;" class="card">
+                <div class="text-center"> <small class="text-uppercase flat">Flat</small> </div>
+                <div class="d-flex justify-content-center px-2">
+                    <div class="d-flex flex-row">
+                        <h1 class="m-0 p-0">{{this.offer}}%</h1> <sup class="mt-2 text-primary star">*</sup>
+                    <button class="buttonesh ml-2 mt-2 mb-3"type="button" title="Copy promo code" id="copy" onclick="CopyToClipboard('to-copy')"><div id="to-copy">{{this.name}}</div><span class="copiedtext" aria-hidden="true">Copied</span></button>
+					</div>
+					
+                </div>
+				<h6 style=" "class="text-success text-center p-0 m-0">For purchase above<i class="ml-1 fa fa-rupee "></i>{{this.min}} /-</h6>
+				 <span class="d-flex justify-content-end p-0 m-0" >Max upto  <i class="fa fa-rupee ml-1 mt-2"></i>{{this.max}} /-</span>
+				  
+              
+			</div></div>    
+    </div>
+</div>
+{{/each}}
+{{!-- test --}}
+							  </div></div>
+						{{!-- <a href="/place_order" class="boxed-btn">Place Order</a> --}}
+                          <div style="background-color:#ecfdff;" class="f-5 font-weight-bold  text-success py-3 mb-3 mt-3 text-center">
+						   <h4>Select payment method </h4>
+						   <hr>
+					
+						     <div class="d-flex col-12  ">
+							
+							<p><input class="mx-3  mt-3" name="payment" id="payment" type="radio" value="COD" placeholder=""></p>
+						        <label for="" class= " "style="font-size:20px;">Cash on Delivery
+							 </label><label for=""><i class="fa-light fa-sack-dollar"></i></label>
+							   </div>
+							    
+								<div class="d-flex col-12  ">
+							   
+							<p><input class="mx-3 mt-3 " name="payment" id="payment" type="radio" value="Razorpay" placeholder=""></p>
+						     <label style="font-size:20px;"for="">Razorpay</label><label for=""> <img style="width:50px;height:20px;margin-left:45px;" src="/images/card.jpg" alt=""></label>
+							 </div> 
+							   <div class="d-flex col-12  ">
+							    
+							<p><input class="mx-3 mt-3 " name="payment" id="payment" type="radio" value="Paypal" placeholder=""></p>
+						      <label style="font-size:20px; "for="">Paypal <img style="width:50px;height:20px;margin-left:45px;" src="/images/card.jpg" alt=""></label>
+							 </div> 
+								{{#if nowallet}}
+							  <div class="d-flex col-12  ">
+							    
+							<p><input class="mx-3 mt-3 " name="payment" id="payment" type="radio" disabled value="Wallet" placeholder=""></p>
+						      <label style="font-size:20px; "for=""><s> Wallet </s> : <i class="fa fa-rupee pr-1"></i><s> {{wallet.Wallet}}/- </s></label><label for=""><i style="margin-left:45px;margin-top:11px;"class="text-dark fa-solid fa-wallet "></i></label>
+							 </div> 
+							 <h5 class="text-danger d-flex justify-content-start ml-4 col-12">You have insufficient fund to order</h5>
+							
+							 {{else}}
+							  <div class="d-flex col-12  ">
+							    
+							<p><input class="mx-3  mt-3 " name="payment" id="payment" type="radio" value="Wallet" placeholder=""></p>
+						      <label style="font-size:20px; "for="">Wallet : <i class="fa fa-rupee pr-1"></i> {{wallet.Wallet}}/-</label>
+							
+							 </div> 
+				{{/if}}
+				 </div>
+						<div class="text-center mb-5">
+								<button  class="btncolor "type="submit">Place order</button>
+								
+						</div>
+									</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- end check out section -->
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="/images/adidas.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/Asics.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/nb.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/nike.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="/images/puma.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+		{{!-- add address --}}
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     {{!--  --}} <div class="modal-header ">
+       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<div class="billing-address-form ">
+									<form action="" id="addaddress" class="">
+									<h6 class="text-danger" id="error1"></h6>
+										<p><input name="username" id="name1" type="text" placeholder="Name" class=" "></p>
+										<h6 class="text-danger" id="error2"></h6>
+									
+										
+						        		<p><input name="email" id="email1" type="email" placeholder="Email"></p>
+										<h6 class="text-danger" id="error3"></h6>
+									
+											<p><input name="phone_number" id="phone1" type="number" placeholder="Phone"></p>
+						        	<h6 class="text-danger" id="error4"></h6>
+									
+						        		<p><input  name="address" id="address1" type="text" placeholder="Address"></p>
+										<p><input name="pincode" id="pincode1" type="text" placeholder="Pincode"></p>
+										<h6 class="text-danger" id="error5"></h6>
+									
+						        		<p><input name="city" id="city1" type="text" placeholder="City"></p>
+						        		{{!-- <p><input  name="state" id="state" type="text" placeholder="State"></p> --}}
+						        
+                <select style="height:60px;"name="state" id="state1" class="form-control" placeholder="State">
+                    <option value="" selected disabled>Select State</option>
+<option value="Andhra Pradesh">Andhra Pradesh</option>
+<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+<option value="Assam">Assam</option>
+<option value="Bihar">Bihar</option>
+<option value="Chandigarh">Chandigarh</option>
+<option value="Chhattisgarh">Chhattisgarh</option>
+<option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+<option value="Daman and Diu">Daman and Diu</option>
+<option value="Delhi">Delhi</option>
+<option value="Lakshadweep">Lakshadweep</option>
+<option value="Puducherry">Puducherry</option>
+<option value="Goa">Goa</option>
+<option value="Gujarat">Gujarat</option>
+<option value="Haryana">Haryana</option>
+<option value="Himachal Pradesh">Himachal Pradesh</option>
+<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+<option value="Jharkhand">Jharkhand</option>
+<option value="Karnataka">Karnataka</option>
+<option value="Kerala">Kerala</option>
+<option value="Madhya Pradesh">Madhya Pradesh</option>
+<option value="Maharashtra">Maharashtra</option>
+<option value="Manipur">Manipur</option>
+<option value="Meghalaya">Meghalaya</option>
+<option value="Mizoram">Mizoram</option>
+<option value="Nagaland">Nagaland</option>
+<option value="Odisha">Odisha</option>
+<option value="Punjab">Punjab</option>
+<option value="Rajasthan">Rajasthan</option>
+<option value="Sikkim">Sikkim</option>
+<option value="Tamil Nadu">Tamil Nadu</option>
+<option value="Telangana">Telangana</option>
+<option value="Tripura">Tripura</option>
+<option value="Uttar Pradesh">Uttar Pradesh</option>
+<option value="Uttarakhand">Uttarakhand</option>
+<option value="West Bengal">West Bengal</option>
+</select>
+<div class="text center d-flex justify-content-center mt-4">
+<button type="submit"class="btncolor w-25">Add</button>
+</div>
+									</form>
+</div>
+	
+{{!--  --}}
+    </div>
+  </div>
+</div>
+	{{!-- add address end--}}
+	<div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
+    id="cartAddedMessage" role="alert">
+    <strong>Coupon Applied <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; left:1rem; "
+    id="deleteAddedMessage" role="alert">
+    <strong>Your address has been deleted <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+</section>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+
+
+<script>
+	$('#shipping-form').submit((e)=>{
+		
+	//	e.preventDefault()
+//	let form =$('shipping-form').val
+let val=		$('input[name="radio"]:checked').val()
+console.log(val)
+let name1=$("#nameu").val()
+console.log(name1)
+let email1=$("#emailu").val()
+let phone1=$("#phoneu").val()
+let address1=$("#addressu").val()
+let city1=$("#cityu").val()
+let pincode1=$("#pincodeu").val()
+let state1= $("#stateu option:selected").val();
+ let payment1=		$('input[name="payment"]:checked').val();
+ let err=$('#err').val()
+  let nameerr=$('#nameerr').val()
+   let emailerr=$('#emailerr').val()
+    let phoneerr=$('#phoneerr').val()
+	 let pincodeerr=$('#pincodeerr').val()
+let coupon=$('#coup').val()
+let second=$('#hide').val()
+	console.log(second)
+	
+console.log(payment1)
+let messages=[]
+		let nameWarning=[]
+		let emailWarning=[]
+		let phoneWarning=[]
+		let cityWarning=[]
+		let pincodeWarning=[]
+let stateWarning=[]
+let radioWarning=[]
+if(val==undefined || payment1==undefined){
+	console.log("errorr")
+messages.push('Select all fields')
+if(messages.length>0){
+	e.preventDefault()
+	$('#err').html(messages.join(','))
+}
+}
+else if(val=="a")
+{
+		if(name1=='' || email1=="" || phone1=='' || city1=='' || address1=='' || pincode1=='' || state1==''  ){
+			console.log("hiii")
+      messages.push('All fields Required!')
+		}
+		else
+		{
+		 if(name1.length<4 &&  name1.length!=0){
+			nameWarning.push('Name must be 4 characters')
+		 }
+		 else if (!isNaN(name1)){
+    nameWarning.push('Name cannot be number')
+  }
+  
+		  if(email1){
+			console.log(email1)
+		 var emailed =  /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var validEmail = emailed.test(email1);
+      if (!validEmail) {
+       emailWarning.push('Enter valid email')
+      }
+    	
+		}
+       if(phone1)
+    {
+		console.log(phone1)
+ var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      var validnumber = phoneno.test(phone1);
+      if (!validnumber) {
+       phoneWarning.push('Enter valid number')
+      }
+    }
+	 if(pincode1){
+	//	if(pincode (isNaN)){
+	//		pincodeWarning.push('Enter valid pincode')
+	//	}
+	 if (isNaN(pincode1)){
+    pincodeWarning.push('Pincode cannot be alphabet')
+  }
+	else	if(pincode1.length!=6 ){
+			pincodeWarning.push('Enter valid pincode')
+		}
+	}
+		}
+		
+if( messages.length>0 ||
+	 nameWarning.length>0 ||
+	 emailWarning.length>0 ||
+	 phoneWarning.length>0 ||
+	 //cityWarning.length>0 ||
+	 pincodeWarning.length>0 ||
+	//  stateWarning.length>0 ||
+ radioWarning.length>0 )
+{
+		e.preventDefault()
+  $('#err').html(messages.join(','))
+   $('#nameerr').html(nameWarning.join(','))
+    $('#emailerr').html(emailWarning.join(','))
+	 $('#phoneerr').html(phoneWarning.join(','))
+ $('#pincodeerr').html(pincodeWarning.join(','))
+}
+else{
+	e.preventDefault()
+
+	console.log(second)
+		$.ajax({
+			url:'/place_order',
+			method:'post',
+			data:{
+name:name1,
+	email:email1,
+	phone:phone1,
+	address:address1,
+	city:city1,
+	pincode:pincode1,
+	state:state1,
+   payment:payment1,
+   coupon:second
+
+			},
+			success:((result)=>{
+			if(result.codstatus){
+		
+		
+		window.location.replace('/ordersuccess/'+result.codpage);
+
+	}
+	else if(result.razor){
+		
+		console.log('ibde')
+		  
+		pay_result(result)
+		console.log('ibde ethiii')
+	//	window.location.replace('/ordersuccess');
+
+		
+	}
+	else if(result.paypal){
+		console.log(result.link)
+	window.location.replace(result.link);
+	
+	}
+			})
+		})
+
+}
+}
+else{
+	e.preventDefault()
+		val=parseInt(val)
+		let dis=$('#discount').html()
+		
+	
+$.ajax({
+			url:'/place_orders',
+			method:'post',
+			data:{
+				index:val,
+		payment:payment1,
+		coupon:second
+},
+success:(result=>{
+//	
+	if(result.codstatus){
+		
+		
+		window.location.replace('/ordersuccess/'+result.codpage);
+
+	}
+	else if(result.razor){
+		
+		
+		  
+		pay_result(result)
+		console.log('ibde ethiii')
+	//	window.location.replace('/ordersuccess');
+
+		
+	}
+	else if(result.paypal){
+		console.log(result.link)
+	window.location.replace(result.link);
+	
+	}
+})
+})
+}	})
+
+function pay_result(order){
+	console.log(order)
+	var options = {
+    "key": "rzp_test_lq7gcttbZU8BHG", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Dana Store",
+    "description": "Test Transaction",
+    "image": "/images/danastore1.png",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+         verifyPayment(response, order)
+
+		//verify_payment(response,order);
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+ rzp1.on('payment.failed', function (response){
+      
+});
+rzp1.open();
+	
+}
+function verifyPayment(response,order){
+	console.log(order)
+	$.ajax({
+		url:'/verifypayment',
+		method:'post',
+		data:{
+			response,order
+		},
+		
+		success:((result)=>{
+			if(result.status){
+				console.log('success')
+				console.log(order)
+         window.location.replace('/ordersuccess/'+order.resultpage);
+			}
+			else{
+						console.log('failed')
+					   window.location.replace('/error');
+
+			}
+
+
+		})
+	})
+}
+	//deleting address
+function	addresssdelete(name,email,number,label,pin,city,state,userid,index){
+	console.log('ibde')
+	$.ajax({
+		url:'/deleteaddress',
+		method:'post',
+		data:{name,email,number,label,pin,city,state,userid},
+		success:(result=>{
+if(result.status)
+{
+	console.log('address de')
+	 $('.modal').modal('hide')
+	
+	 $(`#${index}`).hide()
+	$('#deleteAddedMessage').addClass('show')
+               
+                setTimeout(() => {
+                    $('#deleteAddedMessage').removeClass('show')
+                }, 4000)
+	 
+  
+	   
+}
+		})
+	})
+}
+//add address validation
+$('#addaddress').submit((e)=>{
+	console.log('name1')	
+	//	e.preventDefault()
+//	let form =$('shipping-form').val
+let name1=$("#name1").val()
+console.log(name1)
+let email1=$("#email1").val()
+let phone1=$("#phone1").val()
+let address1=$("#address1").val()
+let city1=$("#city1").val()
+let pincode1=$("#pincode1").val()
+let state1= $("#state1 option:selected").val();
+ let error1=$('#error1').val()
+  let error2=$('#error2').val()
+   let error3=$('#error3').val()
+    let error4=$('#error4').val()
+	 let error5=$('#error5').val()
+
+let messages=[]
+		let nameWarning=[]
+		let emailWarning=[]
+		let phoneWarning=[]
+		
+		let pincodeWarning=[]
+		if(name1=='' || email1=="" || phone1=='' || city1=='' || address1=='' || pincode1=='' || state1==''  ){
+			console.log("hiii")
+      messages.push('All fields Required!')
+		}
+		else 
+		{
+			if(name1.length<4 ){
+			nameWarning.push('Name must be 4 characters')
+		
+			}
+			else if (!isNaN(name1)){
+    nameWarning.push('Name cannot be number')
+  }
+		  if(email1){
+			console.log(email1)
+		 var emailed =  /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var validEmail = emailed.test(email1);
+      if (!validEmail) {
+       emailWarning.push('Enter valid email')
+      }
+    	
+		}
+       if(phone1)
+    {
+		console.log(phone1)
+ var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      var validnumber = phoneno.test(phone1);
+      if (!validnumber) {
+       phoneWarning.push('Enter valid number')
+      }
+    }
+	 if(pincode1){
+	//	if(pincode (isNaN)){
+	//		pincodeWarning.push('Enter valid pincode')
+	//	}
+	if (isNaN(pincode1)){
+   pincodeWarning.push('Pincode cannot be character')
+  }
+	else	if(pincode1.length!=6 ){
+			pincodeWarning.push('Enter valid pincode')
+		}
+	}
+		}	
+if( messages.length>0 ||
+	 nameWarning.length>0 ||
+	 emailWarning.length>0 ||
+	 phoneWarning.length>0 ||
+	 //cityWarning.length>0 ||
+	 pincodeWarning.length>0 
+	//  stateWarning.length>0 ||
+ //radioWarning.length>0
+  )
+{
+		e.preventDefault()
+  $('#error1').html(messages.join(','))
+   $('#error2').html(nameWarning.join(','))
+    $('#error3').html(emailWarning.join(','))
+	 $('#error4').html(phoneWarning.join(','))
+ $('#error5').html(pincodeWarning.join(','))
+}
+else{
+
+
+ $.ajax({
+        url:'/addaddress',
+        method:'post',
+        data:$('#addaddress').serialize(),
+        success:(result=>{
+            if(result.status){
+              
+                 location.reload()
+
+          
+        
+            }
+        })
+    })}
+})
+function apply(){
+		
+	let discount=$('#coupon').html()
+	discount=parseInt(discount)
+	console.log(discount)
+		let sub=$('#total').html()
+		sub=parseInt(sub)
+		if(isNaN(discount)){
+			discount=0
+		
+		}
+	
+		let coupon=$('#coup').val()
+console.log(coupon)	
+	//	$('#coupform').button(e=>{
+	//		e.preventDefault()
+			$.ajax({
+			url:'/applycoupon',
+			method:'post',
+			data:{coupon},
+			success:(result=>{
+				if(result.discount){
+					console.log(result.discount)
+					console.log(result.total)
+$('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 4000)
+				$('#coupon').html(result.discount)
+				$('#total').html(result.total)
+			$('#cartAddedMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#cartAddedMessage').removeClass('show')
+                }, 4000)
+       let couponesh=document.createElement('input')
+	   couponesh.setAttribute('type','hidden')
+		couponesh.setAttribute('value',coupon)
+		couponesh.setAttribute('name','hide')
+couponesh.setAttribute('id','hide')
+		document.getElementById("shipping-form").appendChild(couponesh);
+			console.log('success')	
+		let second=$('#hide').val()
+			console.log(second)
+				}
+				else if(result){
+					
+					$('#couperror').show()
+					$('#couperror').html(result)
+					 $("#couperror").delay(3200).fadeOut(300);    
+      $('#total').html(discount+sub)
+	 
+	 console.log('dgsdg')
+		 
+		     $('#coupon').html('')
+					coupon=''
+					console.log(coupon)
+				}
+			})
+		})
+}
+	//	})
+		
+//	}
+
+	function CopyToClipboard (containerid) {
+  var btnCopy = document.getElementById( "copy" );
+  var main = document.getElementById( "maincontent" );
+  console.log('asdgsdg')
+  // Create a new textarea element and give it id='temp_element'
+  var textarea = document.createElement("textarea");
+  textarea.id = "temp_element";
+  // Optional step to make less noise on the page, if any!
+  textarea.style.height = 0;
+  // Now append it to your page somewhere, I chose <body>
+  document.body.appendChild(textarea);
+  // Give our textarea a value of whatever inside the div of id=containerid
+  textarea.value = document.getElementById(containerid).innerText;
+  // Now copy whatever inside the textarea to clipboard
+  var selector = document.querySelector("#temp_element");
+  selector.select();
+  document.execCommand("copy");
+  // Remove the textarea
+  document.body.removeChild(textarea); 
+  // Add copied text after click
+  if ( document.execCommand( "copy" ) ) {
+      btnCopy.classList.add( "copied" );
+    
+      var temp = setInterval( function(){
+        btnCopy.classList.remove( "copied" );
+        clearInterval(temp);
+      }, 600 );
+    
+  } else {
+    console.info( "document.execCommand went wrong…" );
+  }
+    
+}
+
+</script>
