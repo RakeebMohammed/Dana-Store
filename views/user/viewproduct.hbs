@@ -18,26 +18,33 @@
 	<div class="single-product mt-150 mb-150">
 		<div class="container">
 			<div class="row">
-               
-				<div class="col-md-5">
+             	<div class="col-md-5">
 					<div class="single-product-img " >
 						<div class="" id="img-container">
-						<img style="height:28rem;width:28rem;"src="/product-images/{{result._id}}.jpg" alt="">
+						<img onmouseenter="" onfocus="hidetext()" onmouseout="showtext()" style="height:28rem;width:28rem;"src="/product-images/{{result._id}}.jpg" alt="">
 					</div>
 					</div>
 				</div>
-				<div class="col-md-7">
-					<div class="single-product-content ">
+				<div class="col-md-7 cardesh">
+					<div class="single-product-content 	 " >
 						<h2>{{result.name}}</h2>
 						<p class="single-product-pricing"><span>Per Piece</span><i class="fa fa-rupee pr-1"></i>{{result.price}} /-</p>
 						<p>{{result.description}}</p>
 					<p class="text-danger pb-3">Hurry...only {{result.stock}} items left !</p>
 						<div class="single-product-form  ">
-						 <a  onclick="return addwish('{{result._id}}')" > 
+					{{#if wishPresent}}
+				 <a id="wish" style="color:red;" onclick="return addwish('{{result._id}}')" class="mx-5 "> 
+						<i class="fa-solid fa-heart fa-lg " title="Add to wishlist"></i>
 						
-						<i style="cursor:pointer;" class=" hover fa-regular fa-heart fa-xl mx-5"></i>
 
-						 </a>	 
+						 </a>	
+					{{else}}
+						 <a id="wish" onclick="return addwish('{{result._id}}')" class="mx-5 "> 
+						<i class="fa-solid fa-heart fa-lg" title="Add to wishlist"></i>
+						
+
+						 </a>	
+						 {{/if}} 
 						<a  class="cart-btn"	  onclick= "return addtocart('{{result._id}}')"  class="carthover"><i class="fas fa-shopping-cart"></i> Add to Cart	</a>
 			
 						</div>
@@ -45,10 +52,10 @@
 								
 						<h4>Share:</h4>
 						<ul class="product-share">
-							<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href=""><i class="fab fa-twitter"></i></a></li>
-							<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
-							<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+							<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
 						</ul>
 					</div>
 				</div>
@@ -83,9 +90,16 @@
 		</div>
 	</div>
 	<!-- end logo carousel -->
-	<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
+	<div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
     id="cartAddedMessage" role="alert">
     <strong>Item added to <a href="/wishlist">Wishlist</a> <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
+    id="wishExistsMessage" role="alert">
+    <strong>Item already exists in <a href="/wishlist">Wishlist</a> <i class="fa-solid fa-square-check"></i> </strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -105,6 +119,7 @@
     
 };
 new ImageZoom(document.getElementById("img-container"), options);
+
 </script>
 	{{!--  --}}
 	<script>
@@ -113,6 +128,7 @@ new ImageZoom(document.getElementById("img-container"), options);
 				url:'/addtowishlist/'+proId,
 				method:'get',
 				success:(result)=>{
+					console.log(result.nouser)
 					if(result.status)
 					{
 					console.log('helo')	
@@ -121,9 +137,33 @@ new ImageZoom(document.getElementById("img-container"), options);
                 setTimeout(() => {
                     $('#cartAddedMessage').removeClass('show')
                 }, 4000)
-
+      document.getElementById('wish').style.color="red"
+					}
+					
+					
+					
+					else if(result.exists){
+$('#wishExistsMessage').addClass('show')
+                console.log('helo')
+                setTimeout(() => {
+                    $('#wishExistsMessage').removeClass('show')
+                }, 4000)
+					}
+					else {
+						console.log('ksdghfkgsdkjf')
+						window.location.replace('/login')
 					}
 				}
 			})
+		}
+		function hidetext(){
+		//	$('#cardesh').hide()
+			document.getElementById('cardesh').style.display="none"
+	
+		}
+		function showtext(){
+			$('#cardesh').show()
+	//document.getElementById('bann').style.color="green"
+	
 		}
 	</script>

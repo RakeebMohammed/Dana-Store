@@ -9,10 +9,11 @@ require('dotenv').config()
 paypal.configure({
   'mode': 'sandbox', //sandbox or live 
   'client_id':process.env.PAYPAL_KEY , // please provide your client id here 
-  'client_secret': process.env.PAYPAL_SECRET // provide your client secret here 
+  'client_secret': 
+  process.env.PAYPAL_SECRET // provide your client secret here 
 });
-require('dotenv').config()
 
+require('dotenv').config()
 var instance = new Razorpay({
  
  key_id:
@@ -30,19 +31,18 @@ module.exports = {
         .get()
         .collection(collections.USER_COLLECTION)
         .findOne({ email: userData.email });
-    
+        phoneexists = await db
+        .get()
+        .collection(collections.USER_COLLECTION)
+        .findOne({ phone_number: userData.number });
+console.log(phoneexists);
 
-      console.log(emailexists);
+    
       if (emailexists) {
         reject("Email already exists...!");
 
        
-      } else {
-        phoneexists = await db
-        .get()
-        .collection(collections.USER_COLLECTION)
-        .findOne({ phone_number: userData.phone_number });
-        if (phoneexists) {
+      } else if (phoneexists) {
           reject("Phone number already exists...!");
         }
         else
@@ -59,7 +59,7 @@ module.exports = {
         resolve();
       }
     }
-    });
+    );
   },
   doLogin: (userData) => {
     return new Promise(async (resolve, reject) => {
@@ -752,7 +752,17 @@ resolve(result.insertedId);
     });
   },
   editProfile: (details) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
+      phoneexists = await db
+      .get()
+      .collection(collections.USER_COLLECTION)
+      .findOne({ phone_number: details.phone_number });
+      if (phoneexists) {
+        reject();
+      }
+      else{
+
+     
       // console.log(details.address);
       let address = {
         name:details.username,
@@ -780,6 +790,7 @@ resolve(result.insertedId);
           }
         );
       resolve();
+        }
     });
   },
   addAddress: (details, userId) => {
@@ -973,10 +984,17 @@ reject()
  
   })},
   addtoWishlist:((userId,proId)=>{
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
+      wishExists=await db.get().collection(collections.USER_COLLECTION).findOne({$and:[{_id:objectid(userId)},{'Wishlist':objectid(proId)}]})
+    console.log(wishExists);
       let wish=objectid(proId)
+     if(!wishExists){
       db.get().collection(collections.USER_COLLECTION).updateOne({_id:objectid(userId)},{$addToSet:{'Wishlist':wish}})
-resolve()    })
+resolve() }
+else{
+  reject()
+}   })
+     
   }),
   getWishlist:(userId=>{
     return new Promise(async(resolve, reject) => {
@@ -998,7 +1016,7 @@ resolve()    })
                 }
               }
   ]).toArray()
-   console.log(wish);
+ //  console.log(wish);
    if(wish.length==0){
     reject()
    }

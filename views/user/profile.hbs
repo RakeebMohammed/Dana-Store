@@ -697,6 +697,11 @@ else{
         success:(result=>{
             if(result.status)
             location.reload()
+            else{
+               $('#numExists').show()
+              $('#numExists').html('Phone number exists')
+               $('#numExists').delay(200).fadeOut(3200)
+            }
         })
     })
 }

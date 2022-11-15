@@ -6,6 +6,8 @@ let productHelpers = require("../helpers/producthelpers");
 let adminHelpers = require("../helpers/adminhelpers");
 const e = require("express");
 const { RoleInstance } = require("twilio/lib/rest/conversations/v1/role");
+var objectid = require("objectid");
+
 require("dotenv").config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -108,7 +110,7 @@ router.get("/", async function (req, res, next) {
       });
     });
   } catch (e) {
-   res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //selcting a single category
@@ -146,7 +148,7 @@ router.get("/selectcategory/:id", (req, res) => {
       });
     });
   } catch (e) {
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 
@@ -191,18 +193,34 @@ router.get("/viewproduct/:id", function (req, res, next) {
   try {
     productHelpers.viewProduct(req.params.id).then(async (result) => {
       let cartcount = 0;
-      
+      let wishPresent = false;
       if (req.session.user) {
         cartcount = await userhelpers.getcartCount(req.session.user._id);
+        wishlist = await userhelpers
+          .getWishlist(req.session.user._id)
+          .catch(() => {
+            wishPresent=false
+          });
+        console.log(wishlist);
+        if (wishlist) {
+          for (i = 0; i < wishlist.length; i++) {
+           if ((wishlist[i].orderproducts._id).toString() == req.params.id) {
+              console.log("ind");
+              wishPresent = true;
+            }
+          }
+        }
+        console.log(wishPresent);
       }
       res.render("user/viewproduct", {
         result,
         user: req.session.user,
         cartcount,
+        wishPresent,
       });
     });
   } catch (e) {
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 
@@ -257,7 +275,7 @@ router.get("/addtocart/:id", async (req, res, next) => {
       res.json({ status: false });
     }
   } catch (e) {
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 
@@ -268,6 +286,7 @@ router.get("/cart", verifyLogin, (req, res) => {
       .getCart(req.session.user._id)
       .then(async (cart) => {
         cartcount = await userhelpers.getcartCount(req.session.user._id);
+       
         let totalAmount = await userhelpers.totalAmount(req.session.user._id);
         res.render("user/cart", {
           cart,
@@ -280,44 +299,40 @@ router.get("/cart", verifyLogin, (req, res) => {
         res.render("user/cart", { cartEmpty: true, user: req.session.user });
       });
   } catch (e) {
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //product quantity changing
 router.post("/changequantity", verifyLogin, async (req, res) => {
- try{
-
-  max = await userhelpers.getStock(req.body.productId);
-  console.log(max);
-  req.body.quantity = parseInt(req.body.quantity);
-  if (req.body.quantity == max && req.body.count == 1) {
-    res.json({ status: false });
-  } else {
-    userhelpers.changeQuantity(req.body).then(async (count) => {
-      count.totalAmount = await userhelpers.totalAmount(req.session.user._id);
-      res.json(count);
-      // console.log(count);
-    });
+  try {
+    max = await userhelpers.getStock(req.body.productId);
+    console.log(max);
+    req.body.quantity = parseInt(req.body.quantity);
+    if (req.body.quantity == max && req.body.count == 1) {
+      res.json({ status: false });
+    } else {
+      userhelpers.changeQuantity(req.body).then(async (count) => {
+        count.totalAmount = await userhelpers.totalAmount(req.session.user._id);
+        res.json(count);
+        // console.log(count);
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    res.redirect("/errors");
   }
-}
-catch(e){
-  console.log(e);
-  res.redirect('/errors')
-}
 });
 // removing cart productitems
 router.post("/deleteitems", verifyLogin, (req, res) => {
- try{
-
-  console.log(req.body);
-  userhelpers.deleteItem(req.body).then(() => {
-    res.json({ status: true });
-  });
-}
-catch(e){
-  console.log(e);
-  res.redirect('/errors')
-}
+  try {
+    console.log(req.body);
+    userhelpers.deleteItem(req.body).then(() => {
+      res.json({ status: true });
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/errors");
+  }
 });
 //checkout
 
@@ -354,214 +369,202 @@ router.get("/checkout", verifyLogin, async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-  res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //deleting address
 router.post("/deleteaddress", verifyLogin, (req, res) => {
- try{
-
-  console.log(req.body);
-  userhelpers.deleteAddress(req.body).then(() => {
-    console.log("ibde ethi");
-    res.json({ status: true });
-  });
-}
-catch(e){
-  console.log(e);
-  res.redirect('/errors')
-}
+  try {
+    console.log(req.body);
+    userhelpers.deleteAddress(req.body).then(() => {
+      console.log("ibde ethi");
+      res.json({ status: true });
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/errors");
+  }
 });
 //order placing
 router.post("/place_order", verifyLogin, async (req, res) => {
-  try{
-  console.log(req.body);
+  try {
+    console.log(req.body);
 
-  products = await userhelpers.getCartproducts(req.session.user._id);
-  console.log(products);
-  totalamount = await userhelpers.totalAmount(req.session.user._id);
-  userhelpers.checkCoupon(req.body, totalamount).then((total) => {
-    totalamount = total.total;
+    products = await userhelpers.getCartproducts(req.session.user._id);
+    console.log(products);
+    totalamount = await userhelpers.totalAmount(req.session.user._id);
+    userhelpers.checkCoupon(req.body, totalamount).then((total) => {
+      totalamount = total.total;
 
-    console.log(totalamount);
-    userhelpers
-      .placeOrder(req.body, products, totalamount, req.session.user._id)
-      .then((orderId) => {
-        let payments = req.body.payment;
-            if (payments ==='COD' || payments==='Wallet' ) {
-              console.log('ibdee'+req.body.payment);
-            let codstatus = { codpage: orderId ,codstatus:true };
-             res.json(codstatus);
-            }
-         else
-        if (payments === "Razorpay") {
-          console.log("ibdee ethiii");
-          userhelpers
-            .generateRazorpay(orderId, totalamount)
-            .then((response) => {
-              console.log("ibde ethi" + response.status);
-               response.resultpage=orderId
+      console.log(totalamount);
+      userhelpers
+        .placeOrder(req.body, products, totalamount, req.session.user._id)
+        .then((orderId) => {
+          let payments = req.body.payment;
+          if (payments === "COD" || payments === "Wallet") {
+            console.log("ibdee" + req.body.payment);
+            let codstatus = { codpage: orderId, codstatus: true };
+            res.json(codstatus);
+          } else if (payments === "Razorpay") {
+            console.log("ibdee ethiii");
+            userhelpers
+              .generateRazorpay(orderId, totalamount)
+              .then((response) => {
+                console.log("ibde ethi" + response.status);
+                response.resultpage = orderId;
                 response.razor = true;
-              res.json(response);
-            });
-        } else if (payments === "Paypal") {
-          var payment = {
-            intent: "authorize",
-            payer: {
-              payment_method: "paypal",
-            },
-            redirect_urls: {
-              return_url: `http://localhost:3000/ordersuccess/${orderId}`,
-              cancel_url: "http://localhost:3000/err",
-            },
-            transactions: [
-              {
-                amount: {
-                  total: totalamount,
-                  currency: "USD",
-                },
-                description: " a book on mean stack ",
+                res.json(response);
+              });
+          } else if (payments === "Paypal") {
+            var payment = {
+              intent: "authorize",
+              payer: {
+                payment_method: "paypal",
               },
-            ],
-          };
-          userhelpers
-            .createPay(payment)
-            .then((transaction) => {
-              var id = transaction.id;
-              console.log(id);
-              var links = transaction.links;
-              console.log(links);
+              redirect_urls: {
+                return_url: `https://danastore.ga/ordersuccess/${orderId}`,
+                cancel_url: "https://danstore.ga/err",
+              },
+              transactions: [
+                {
+                  amount: {
+                    total: totalamount,
+                    currency: "USD",
+                  },
+                  description: " a book on mean stack ",
+                },
+              ],
+            };
+            userhelpers
+              .createPay(payment)
+              .then((transaction) => {
+                var id = transaction.id;
+                console.log(id);
+                var links = transaction.links;
+                console.log(links);
 
-              var counter = links.length;
-              while (counter--) {
-                if (links[counter].rel == "approval_url") {
-                  console.log(links[counter].href);
-                  transaction.link = links[counter].href;
-                  console.log(links[counter].method);
-                  // redirect to paypal where user approves the transaction
-                  //  return res.redirect( links[counter].href )
-                  userhelpers.changeOrderstatus(orderId).then(() => {
-                    transaction.paypal = true;
-                    transaction.orderId = orderId;
-                    res.json(transaction);
-                  });
+                var counter = links.length;
+                while (counter--) {
+                  if (links[counter].rel == "approval_url") {
+                    console.log(links[counter].href);
+                    transaction.link = links[counter].href;
+                    console.log(links[counter].method);
+                    // redirect to paypal where user approves the transaction
+                    //  return res.redirect( links[counter].href )
+                    userhelpers.changeOrderstatus(orderId).then(() => {
+                      transaction.paypal = true;
+                      transaction.orderId = orderId;
+                      res.json(transaction);
+                    });
+                  }
                 }
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              res.redirect("/error");
-            });
-        }
-      });
-  });
-   }
-   catch(e){
-
+              })
+              .catch((err) => {
+                console.log(err);
+                res.redirect("/error");
+              });
+          }
+        });
+    });
+  } catch (e) {
     console.log(e);
-    res.redirect('/errors')
-
+    res.redirect("/errors");
   }
 });
 
 //order placed using saved address
 router.post("/place_orders", verifyLogin, async (req, res) => {
-  try {
-    console.log(req.body);
-    console.log(req.body.coupon);
-    products = await userhelpers.getCartproducts(req.session.user._id);
-    console.log(products);
-    totalamount = await userhelpers.totalAmount(req.session.user._id);
-    // console.log(totalamount);
-    userhelpers
-      .checkCoupon(req.body, totalamount)
-      .then((total) => {
-        totalamount = total.total;
-        console.log("first" + total.total);
-        console.log("second" + totalamount);
+  // try {
+  console.log(req.body);
+  console.log(req.body.coupon);
+  products = await userhelpers.getCartproducts(req.session.user._id);
+  console.log(products);
+  totalamount = await userhelpers.totalAmount(req.session.user._id);
+  // console.log(totalamount);
+  userhelpers
+    .checkCoupon(req.body, totalamount)
+    .then((total) => {
+      totalamount = total.total;
+      console.log("first" + total.total);
+      console.log("second" + totalamount);
 
-        userhelpers
-          .placeOrdersaved(
-            req.body,
-            products,
-            totalamount,
-            req.session.user._id
-          )
-          .then((orderId) => {
-            console.log(req.body.payment);
-            let payments = req.body.payment;
-            if (payments === "COD" || payments === "Wallet") {
-              console.log("ibdee" + req.body.payment);
-              let codstatus = { codpage: orderId, codstatus: true };
-              res.json(codstatus);
-            } else if (payments === "Razorpay") {
-              console.log("ibdee ethiii");
-              userhelpers
-                .generateRazorpay(orderId, totalamount)
-                .then((response) => {
-                  console.log("ibde ethi" + response.status);
-                  response.resultpage = orderId;
-                  response.razor = true;
-                  res.json(response);
-                });
-            } else if (payments === "Paypal") {
-              var payment = {
-                intent: "authorize",
-                payer: {
-                  payment_method: "paypal",
-                },
-                redirect_urls: {
-                  return_url: `http://localhost:3000/ordersuccess/${orderId}`,
-                  cancel_url: "http://localhost:3000/err",
-                },
-                transactions: [
-                  {
-                    amount: {
-                      total: totalamount,
-                      currency: "USD",
-                    },
-                    description: " a book on mean stack ",
+      userhelpers
+        .placeOrdersaved(req.body, products, totalamount, req.session.user._id)
+        .then((orderId) => {
+          console.log(req.body.payment);
+          let payments = req.body.payment;
+          if (payments === "COD" || payments === "Wallet") {
+            console.log("ibdee" + req.body.payment);
+            let codstatus = { codpage: orderId, codstatus: true };
+            res.json(codstatus);
+          } else if (payments === "Razorpay") {
+            console.log("ibdee ethiii");
+            userhelpers
+              .generateRazorpay(orderId, totalamount)
+              .then((response) => {
+                console.log("ibde ethi" + response.status);
+                response.resultpage = orderId;
+                response.razor = true;
+                res.json(response);
+              });
+          } else if (payments === "Paypal") {
+            var payment = {
+              intent: "authorize",
+              payer: {
+                payment_method: "paypal",
+              },
+              redirect_urls: {
+                return_url: `https://danastore.ga/ordersuccess/${orderId}`,
+                cancel_url: "https://danastore.ga/err",
+              },
+              transactions: [
+                {
+                  amount: {
+                    total: totalamount,
+                    currency: "USD",
                   },
-                ],
-              };
-              userhelpers
-                .createPay(payment)
-                .then((transaction) => {
-                  var id = transaction.id;
-                  console.log(id);
-                  var links = transaction.links;
-                  console.log(links);
+                  description: " a book on mean stack ",
+                },
+              ],
+            };
+            userhelpers
+              .createPay(payment)
+              .then((transaction) => {
+                var id = transaction.id;
+                console.log(id);
+                var links = transaction.links;
+                console.log(links);
 
-                  var counter = links.length;
-                  while (counter--) {
-                    if (links[counter].rel == "approval_url") {
-                      console.log(links[counter].href);
-                      transaction.link = links[counter].href;
-                      console.log(links[counter].method);
-                      // redirect to paypal where user approves the transaction
-                      //  return res.redirect( links[counter].href )
-                      userhelpers.changeOrderstatus(orderId).then(() => {
-                        transaction.paypal = true;
-                        transaction.orderId = orderId;
-                        res.json(transaction);
-                      });
-                    }
+                var counter = links.length;
+                while (counter--) {
+                  if (links[counter].rel == "approval_url") {
+                    console.log(links[counter].href);
+                    transaction.link = links[counter].href;
+                    console.log(links[counter].method);
+                    // redirect to paypal where user approves the transaction
+                    //  return res.redirect( links[counter].href )
+                    userhelpers.changeOrderstatus(orderId).then(() => {
+                      transaction.paypal = true;
+                      transaction.orderId = orderId;
+                      res.json(transaction);
+                    });
                   }
-                })
-                .catch((err) => {
-                  console.log(err);
-                  //   res.redirect("/error");
-                });
-            }
-          });
-      })
-      .catch((err) => {
-        res.redirect("/user/checkout");
-      });
-  } catch (e) {
-    console.log(e);
-    res.redirect('/errors')
-  }
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                //   res.redirect("/error");
+              });
+          }
+        });
+    })
+    .catch((err) => {
+      res.redirect("/user/checkout");
+    });
+  // } catch (e) {
+  //   console.log(e);
+  //   res.redirect('/errors')
+  // }
 });
 //error on payment
 router.get("/error", verifyLogin, (req, res) => {
@@ -600,7 +603,7 @@ router.get("/ordersuccess/:id", verifyLogin, async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //displaying the order details
@@ -611,7 +614,7 @@ router.get("/orderdetails/:id", verifyLogin, (req, res) => {
       .then(async (result) => {
         // products=await userhelpers.getOrderProduct(req.session.user._id)
         cartcount = await userhelpers.getcartCount(req.session.user._id);
-    
+
         orders = await userhelpers.getuserOrder(req.params.id);
         let stepper = {};
         if (orders.PaymentStatus == "Placed") {
@@ -629,18 +632,20 @@ router.get("/orderdetails/:id", verifyLogin, (req, res) => {
           user: req.session.user,
           result,
           orders,
-          stepper,cartcount
+          stepper,
+          cartcount,
         });
       })
       .catch(() => {
         res.render("user/orderdetails", {
           user: req.session.user,
-          image: true,cartcount
+          image: true,
+          cartcount,
         });
       });
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //going back to order page
@@ -652,7 +657,7 @@ router.get("/orders", verifyLogin, (req, res) => {
     });
   } catch (e) {
     console.log(e);
-  res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //
@@ -687,7 +692,7 @@ router.get("/profile", verifyLogin, (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //editing profile
@@ -695,6 +700,8 @@ router.post("/editprofile", verifyLogin, (req, res) => {
   try {
     userhelpers.editProfile(req.body).then(() => {
       res.json({ status: true });
+    }).catch(()=>{
+      res.json({status:false})
     });
   } catch (e) {
     res.json();
@@ -777,18 +784,30 @@ router.get("/wishlist", verifyLogin, async (req, res) => {
       });
   } catch (e) {
     console.log(e);
-  res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //adding to wishlsit page addtowishlist
 router.get("/addtowishlist/:id", verifyLogin, (req, res) => {
   try {
-    console.log(req.params.id);
-    userhelpers.addtoWishlist(req.session.user._id, req.params.id).then(() => {
-      res.json({ status: true });
-    });
+   if(!req.session.user._id){
+    console.log('fhh');
+res.json({status:false})
+   }
+   else{
+    console.log('fhhsdgsdgsd');
+   
+    userhelpers
+      .addtoWishlist(req.session.user._id, req.params.id)
+      .then(() => {
+        res.json({ status: true });
+      })
+      .catch(() => {
+        res.json({ exists: true });
+      });}
   } catch (e) {
-    res.json();
+  console.log('thett');
+   res.json();
   }
 });
 //applyin gcoupon
@@ -871,7 +890,7 @@ router.post("/search", async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //contact
@@ -884,7 +903,7 @@ router.get("/contact", (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //about
@@ -897,12 +916,12 @@ router.get("/about", (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    res.redirect('/errors')
+    res.redirect("/errors");
   }
 });
 //error page
-router.get('/errors',(req,res)=>{
-  res.render('user/404')
-})
+router.get("/errors", (req, res) => {
+  res.render("user/404");
+});
 
 module.exports = router;

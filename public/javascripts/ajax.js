@@ -98,9 +98,10 @@ $.ajax({
   }
   else{
     console.log('max')
-    $(`#max${productId}`).show()
-    $(`#max${productId}`).html('Product stock reached its limit').delay(200)
-  //  $("#codesuccess").delay(200).fadeOut(300);
+   $('#cartAddedMessage').addClass('show')
+   setTimeout(()=>{
+    $('#cartAddedMessage').removeClass('show')
+   },4000)
   }
 
  })
