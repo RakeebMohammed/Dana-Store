@@ -698,11 +698,14 @@ router.get("/profile", verifyLogin, (req, res) => {
 //editing profile
 router.post("/editprofile", verifyLogin, (req, res) => {
   try {
-    userhelpers.editProfile(req.body).then(() => {
+   
+    
+    userhelpers.editProfile(req.body,req.session.user._id).then(() => {
       res.json({ status: true });
     }).catch(()=>{
       res.json({status:false})
     });
+  
   } catch (e) {
     res.json();
   }

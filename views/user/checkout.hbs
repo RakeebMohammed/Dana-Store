@@ -169,14 +169,14 @@ h1 {
 									<input type="radio" class=" "value="{{@index}}" name="radio">
 								<i class="fa fa-trash  " style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal{{@index}}" ></i>
 								</div>
-									<input name="name" disabled id="name" type="text" placeholder="Name" value="{{this.address.name}}"  class="form-control mt-2"></p>
-						        		<p><input name="email" disabled id="email" type="email" placeholder="Email" value="{{this.address.email}}"  class="form-control my-2"></p>
-											<p><input name="phone"disabled  id="phone" type="text" placeholder="Phone"  value="{{this.address.phone_number}}" class="form-control my-2"></p>
+									<input name="name"  id="name" type="text" placeholder="Name" value="{{this.address.name}}" readonly class="form-control mt-2 bg-white"></p>
+						        		<p><input name="email"  id="email" type="email" placeholder="Email" value="{{this.address.email}}" readonly class="form-control my-2 bg-white"></p>
+											<p><input name="phone"  id="phone" type="text" placeholder="Phone"  value="{{this.address.phone_number}}"readonly class="form-control my-2 bg-white"></p>
 						        	
-						        		<p><input  name="address" disabled id="address" type="text" placeholder="Address"  value="{{this.address.label}}" class="form-control my-2"></p>
-										<p><input name="pincode" disabled id="pincode" type="text" placeholder="Pincode" value="{{this.address.pincode}}"  class="form-control my-2"></p>
-						        		<p><input name="city" disabled  id="city" type="text" placeholder="City"  value="{{this.address.city}}" class="form-control my-2"></p>
-						        		<p><input  name="state"disabled id="state" type="text" placeholder="State"  value="{{this.address.state}}" class="form-control my-2"></p>
+						        		<p><input  name="address"  id="address" type="text" placeholder="Address"  value="{{this.address.label}}"readonly class="form-control my-2 bg-white"></p>
+										<p><input name="pincode"  id="pincode" type="text" placeholder="Pincode" value="{{this.address.pincode}}"readonly  class="form-control my-2 bg-white"></p>
+						        		<p><input name="city"   id="city" type="text" placeholder="City"  value="{{this.address.city}}"readonly class="form-control my-2 bg-white"></p>
+						        		<p><input  name="state" id="state" type="text" placeholder="State"  value="{{this.address.state}}"readonly class="form-control my-2 bg-white"></p>
 									</div>
 							  	{{!-- modal --}}
 						         <div class="modal fade" id="exampleModal{{@index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

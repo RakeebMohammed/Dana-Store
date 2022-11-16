@@ -751,13 +751,17 @@ resolve(result.insertedId);
       console.log(user);
     });
   },
-  editProfile: (details) => {
+  editProfile: (details,userId) => {
     return new Promise(async(resolve, reject) => {
+    
+
       phoneexists = await db
       .get()
       .collection(collections.USER_COLLECTION)
-      .findOne({ phone_number: details.phone_number });
+      .findOne({$and:[{ phone_number: details.phone_number },{_id:{$ne:objectid(userId)}}]});
+     console.log('dsgsadgsdgsdg'+phoneexists);
       if (phoneexists) {
+        console.log('ibide');
         reject();
       }
       else{

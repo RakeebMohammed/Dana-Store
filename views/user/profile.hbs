@@ -155,23 +155,23 @@
                 <form id="profile" action="" >
                     <h5 class="text-danger" id="err"></h5>
                 <div class="row mt-2">
-                    <div class="col-md-12"><label class="labels">Name</label><input type="text"   name="username" id="name"class="form-control" placeholder=" Enter full name" value="{{result.username}}"></div>
+                    <div class="col-md-12"><label class="labels">Name</label><input type="text"   name="username" id="name"class="form-control bg-white" placeholder=" Enter full name" value="{{result.username}}"></div>
                 <p class="text-danger ml-3" id="nameerr"></p>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" name="phone_number" id="number" class="form-control" placeholder="Enter phone number" value="{{result.phone_number}}"></div>
+                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" name="phone_number" id="number" class="form-control bg-white" placeholder="Enter phone number" value="{{result.phone_number}}"></div>
                     <p class="text-danger ml-3" id="phoneerr"></p>
                
-                     <div class="col-md-12 mt-2"><label class="labels">Email ID</label><input type="text" name="email" id="email" class="form-control" placeholder="Enter email id" value="{{result.email}}"></div>
+                     <div class="col-md-12 mt-2"><label class="labels">Email ID</label><input type="text" name="email" id="email" class="form-control bg-white" placeholder="Enter email id" value="{{result.email}}"></div>
                    <p class="text-danger ml-3" id="emailerr"></p>
                
                     
-                    <div class="col-md-12 mt-2"><label class="labels">Education</label><input type="text" id="education" name="education" class="form-control" placeholder="Enter you education" value="{{result.education}}"></div>
-                <div class="col-md-12 mt-2"><label class="labels">Address </label><textarea class="form-control" id="address" rows="5" name="address" placeholder="Enter your address" value="">{{result.profileaddress.useraddress}}</textarea></div>
-                    <div class="col-md-12 mt-2 mt-2"><label class="labels">Pincode</label><input type="text" id="pincode"  name="pincode"class="form-control" placeholder="Enter pincode" value="{{result.profileaddress.pincode}}"></div>
+                    <div class="col-md-12 mt-2"><label class="labels">Education</label><input type="text" id="education" name="education" class="form-control bg-white" placeholder="Enter you education" value="{{result.education}}"></div>
+                <div class="col-md-12 mt-2"><label class="labels">Address </label><textarea class="form-control bg-white" id="address" rows="5" name="address" placeholder="Enter your address" value="">{{result.profileaddress.useraddress}}</textarea></div>
+                    <div class="col-md-12 mt-2 mt-2"><label class="labels">Pincode</label><input type="text" id="pincode"  name="pincode"class="form-control bg-white" placeholder="Enter pincode" value="{{result.profileaddress.pincode}}"></div>
                     <p class="text-danger ml-3" id="pincodeerr"></p>
                
-                     <div class="col-md-12 mt-2 mt-2"><label class="labels">City</label><input type="text" id="city" name="city"class="form-control" placeholder="Enter city" value="{{result.profileaddress.city}}"></div>
+                     <div class="col-md-12 mt-2 mt-2"><label class="labels">City</label><input type="text" id="city" name="city"class="form-control bg-white" placeholder="Enter city" value="{{result.profileaddress.city}}"></div>
                  
                 </div>
                
@@ -180,7 +180,7 @@
         <div class="col-md-3 ">
             <div class="p-3 py-4">
         <label for="">State</label>
-                <select name="state" id="statesh" class="form-control">
+                <select name="state" id="statesh" class="form-control bg-white">
                     {{#if result.profileaddress.state}}
                       <option value="{{result.profileaddress.state}}" selected >{{result.profileaddress.state}}</option>
                    {{else}}
@@ -226,7 +226,7 @@
                      {{!-- <div class="col-md-12 mt-2"><label class="labels">State</label><input type="text" name="state"class="form-control" placeholder="Enter state" value="{{result.state}}"></div> --}}
                     {{!-- <div class="col-md-12 mt-2"><label class="labels">Country</label><input type="text" name="country"class="form-control" placeholder="Enter country" value="{{result.country}}"></div> --}}
                   <label class="mt-2" for="">Country</label>
-                 <select name="country"id="countryesh" class="form-control ">
+                 <select name="country"id="countryesh" class="form-control bg-white">
                     {{#if result.profileaddress.country}}
   <option value="{{result.profileaddress.country}}" selected >{{result.profileaddress.country}}</option>
                     {{else}}
