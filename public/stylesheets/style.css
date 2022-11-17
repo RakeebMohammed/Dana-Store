@@ -50,6 +50,46 @@ cursor:pointer
   border-style:none;
   border-color: none;
 }
+.imagesh
+{
+height:auto;
+  background-image: url(/images/banner3.jpg);
+  background-position: center;
+  background-size:cover ;
+  margin-top:85px; 
+  background-repeat: none;
+}
+.signupimagesh{
+  height:auto;
+  background-image: url(/images/login.jpg);
+   background-position:center;
+  background-size:auto;
+  margin-top:118px;
+  
+}
+.imageZoom{
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+
+}
+.imageZoom:hover{
+  -webkit-transform: scale(1.3);
+	transform: scale(1.2);
+}
+.activesh{
+  border: none;
+    background-color: #F28123;
+    color: #fff;
+}
+.pageHover{
+  height:40px;
+  width:40px;
+}
+.pageHover:hover{
+ background-color: none;
+}
 /* 
 checking cropper*/
 

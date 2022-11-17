@@ -15,6 +15,9 @@
 
 {{!-- demo --}}
 <!--================ORDER Area =================-->
+    {{#if image}}
+  <div class="d-flex justify-content-center my-5">  <img src="/images/noorder1.jpg" alt=""></div>
+    {{else}}
     <section class="cart_area mt-4">
         <div class="container">
             <div class="cart_inner">
@@ -74,8 +77,8 @@
                                  <td>
                                     <h5  class="index mt-4"id="index{{this._id}}">{{this.PaymentStatus}}</h5>
                                 </td>
-                                 <td ><button class="cancel mt-2 btncolor" id="{{this._id}}"  onclick=" deleteorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}','{{this.Amount}}','{{this.PaymentMethod}}')">Cancel order</button>
-						<button class="return mt-2 btncolorchange hide" id="return{{this._id}}"  onclick=" returnorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}')">Return order</button></td>
+                                 <td class="" ><button class="cancel mt-2 btncolor " id="{{this._id}}" title="Cancel Order" onclick=" deleteorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}','{{this.Amount}}','{{this.PaymentMethod}}')">Cancel</button>
+						<button class="return mt-2 btncolorchange hide" id="return{{this._id}}" title="Return Order" onclick=" returnorder('{{this.UserId}}','{{this._id}}','{{this.orderproducts._id}}')">Return</button></td>
 						
                                 {{!-- <td>
                                     <a class="btn btn-link btn-light" href="/cancel-order-products/{{this._id}}">Cancel</a>
@@ -94,6 +97,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+{{/if}}
     </section>
     <!--================End ORDER Area =================-->
 {{!-- end demo --}}

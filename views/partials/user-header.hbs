@@ -23,16 +23,16 @@
 						<!-- menu start -->
 						<nav class="main-menu">
 							<ul>
-								<li class="current-list-item"><a href="/">Home</a>
+								<li class=" {{#if home}}current-list-item {{/if}}"><a href="/">Home</a>
 									
 								</li>
-								<li><a href="/about">About</a></li>
+								<li class="{{#if about}}current-list-item {{/if}}"><a  href="/about">About</a></li>
 								
 							
 								
-								<li><a href="/contact">Contact</a></li>
+								<li class="{{#if contact}}current-list-item {{/if}}"><a  href="/contact">Contact</a></li>
 									{{#if user}}
-									<li><a >{{user.username}}</a>
+									<li class="{{#if profile}}current-list-item {{/if}}"><a >{{user.username}}</a>
 									<ul class="sub-menu">
 										<li><a href="/profile">Profile</a></li>
 										<li><a href="/orders">Orders</a></li>
@@ -53,15 +53,15 @@
 										{{#if user}}
 										<a href='/cart'class="shopping-cart" onclick="return show()"><i class="fas fa-shopping-cart"></i><span style="height:14px;" id="cart-count" class="ml-1 badge badge-light">{{cartcount}}</span></a>
 										{{/if}}
-									{{#if index}}	<a  class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									{{#if index}}	<a  class=" search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									{{/if}}
 									</div>
 								</li>
 							</ul>
 						</nav>
-						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-					
-						<div class="mobile-menu"></div>
+					{{#if index}}	<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>{{/if}}
+				
+						<div class="mobile-menu"></div>	
 						<!-- menu end -->
 					</div>
 				</div>

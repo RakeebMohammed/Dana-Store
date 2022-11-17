@@ -127,11 +127,11 @@
                 <div class="col-md-12 ">
                     <div class="product-filters d-flex justify-content-center">
                         <ul>
-                            <li class="active" data-filter="*">All</li>
+                 <a href="/">          <li class="{{#if all}}active"{{/if}} data-filter="*">All</li></a> 
 							{{#each result}}
                            {{!-- <button id="{{this.category}}"onclick="selectproduct('{{this.category}}')"><li data-filter=".strawberry">{{this.category}}</li></button> --}}
                         
-						   <a href="/selectcategory/{{this.category}}"> <li data-filter=".strawberry">{{this.category}}</li></a>
+						   <a href="/selectcategory/{{this.category}}"> <li class="color" id="{{this.category}}" data-filter=".strawberry">{{this.category}}</li></a>
                          {{/each}}
                         </ul>
                     </div>
@@ -145,11 +145,16 @@
 				<div class="col-lg-4 col-md-6 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
 					
 					<div style="height:36rem;" class="single-product-item ">
-						
+						{{#if nostock}}
 						<div class="product-image">
 							
-							<a  href="/viewproduct/{{this._id}}"><img style="height:250px;" src="/product-images/{{this._id}}.jpg" alt=""></a>
+							<img style="height:250px;" class="imageZoom" src="/product-images/{{this._id}}.jpg" alt="">
 						</div>
+					{{else}}	<div class="product-image">
+							
+							<a  href="/viewproduct/{{this._id}}"><img style="height:250px;" class="imageZoom" src="/product-images/{{this._id}}.jpg" alt=""></a>
+						</div>
+						{{/if}}
 						<h3 class="col-12 text-truncate mb-2">{{this.name}}</h3>
 <s><h4 class="mrp hide p-0 m-0">{{this.MRP}}</h4></s>
 						
@@ -165,6 +170,25 @@
 		</div>
 		{{/if}}
 	<!-- testimonail-section -->
+	<div class="d-flex justify-content-center my-3"><nav aria-label="Page navigation example">
+		<ul class="pagination">
+			<li class="page-item">
+				<a class="page-link pageHover" href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			{{#for 1 pages 1}}
+			 <li class="page-item "><a class="page-link pt-2 pageHover{{#ifCond this ../currentPage}} activesh {{/ifCond}}" href="/?page={{this}}">{{this}}</a></li>
+			{{/for}}
+
+			<li class="page-item ">
+				<a class="page-link pageHover" href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+	</div>
 	<div class="testimonail-section mt-5 mb-5">
 		<div class="container">
 			<div class="row">
@@ -275,13 +299,27 @@
 
 	for(i=0;i<price.length;i++){
 		if(price[i].innerText != mrp[i].innerText){
-		console.log('equal'+i)
-	
-	console.log(mrp[i].innerHTML)
-	console.log(price[i].innerHTML)
+		
 			mrp[i].style.display="block";
 	
 		}
 	}
-	console.log('sdgd')
+	
+	{{#if cat}}
+	let cat ={{cat}}.innerHTML
+	category=document.querySelectorAll('.color')
+	for(i=0;i<category.length;i++)
+	if(cat == category[i].innerHTML)
+	{
+		console.log(cat)
+		console.log(category)
+	//	document.querySelectorAll('.color').style.background='red'
+	 category[i].style.background = '#F28123';
+	// border:  #F28123;
+     category[i].style.color = '#fff';
+	category[i].style.borderColor='#F28123'
+   category[i].style.border='2px solid'
+	}
+	
+{{/if}}
 </script>

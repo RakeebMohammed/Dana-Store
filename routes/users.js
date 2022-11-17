@@ -23,7 +23,7 @@ const verifyLogin = (req, res, next) => {
 };
 
 router.get("/otplogin", (req, res) => {
-  res.render("user/otplogin");
+  res.render("user/otplogin",{nofooter:true});
 });
 router.post("/sendotp", (req, res) => {
   var num = req.body.number;
@@ -75,8 +75,35 @@ router.post("/verifyotp", (req, res) => {
 });
 //home page
 router.get("/", async function (req, res, next) {
-  try {
+ // try {
     let cartcount = null;
+  //  
+  const perPage = 9;
+  let pageNum;
+  let skip;
+  let productCount;
+  let pages;
+  pageNum = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1;
+  console.log(typeof (pageNum))
+  skip = (pageNum - 1) * perPage
+  await userhelpers.getProductCount().then((count) => {
+    productCount = count;
+  })
+  pages = Math.ceil(productCount / perPage)
+  const Handlebars=require('handlebars')
+  Handlebars.registerHelper('ifCond', function (v1, v2, options) {
+    if (v1 === v2) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+  Handlebars.registerHelper('for', function (from, to, incr, block) {
+    var accum = '';
+    for (var i = from; i <= to; i += incr)
+      accum += block.fn(i);
+    return accum;
+  });
+  //  
     if (req.session.user) {
       console.log(cartcount);
       cartcount = await userhelpers.getcartCount(req.session.user._id);
@@ -86,7 +113,7 @@ router.get("/", async function (req, res, next) {
     console.log(banner);
     // console.log(req.session.user);
     let user = req.session.user;
-    productHelpers.allProducts().then((products) => {
+    userhelpers.getPaginatedProducts(skip,perPage).then((products) => {
       productHelpers.findCategory().then((result) => {
         for (i = 0; i < products.length; i++) {
           console.log(products[i]);
@@ -102,16 +129,16 @@ router.get("/", async function (req, res, next) {
             result,
             cartcount,
             banner,
-            index: true,
+            index: true,home:true,all:true,pages,currentPage:pageNum
           });
         } else {
-          res.render("user/index", { products, result, banner, index: true });
+          res.render("user/index", { products, result, banner, index: true ,home:true,all:true,pages,currentPage:pageNum});
         }
       });
     });
-  } catch (e) {
-    res.redirect("/errors");
-  }
+ // } catch (e) {
+//    res.redirect("/errors");
+ // }
 });
 //selcting a single category
 router.get("/selectcategory/:id", (req, res) => {
@@ -126,6 +153,10 @@ router.get("/selectcategory/:id", (req, res) => {
             products[i].nostock = true;
           }
         }
+         cat=req.params.id
+      console.log(cat);
+       
+       
         if (req.session.user) {
           cartcount = await userhelpers.getcartCount(req.session.user._id);
           res.render("user/index", {
@@ -134,7 +165,7 @@ router.get("/selectcategory/:id", (req, res) => {
             result,
             banner,
             cartcount,
-            index: true,
+            index: true,home:true,cat
           });
         } else {
           res.render("user/index", {
@@ -142,7 +173,7 @@ router.get("/selectcategory/:id", (req, res) => {
             user: req.session.user,
             result,
             banner,
-            index: true,
+            index: true,home:true,cat
           });
         }
       });
@@ -280,12 +311,13 @@ router.get("/addtocart/:id", async (req, res, next) => {
 });
 
 //cart page
-router.get("/cart", verifyLogin, (req, res) => {
+router.get("/cart", verifyLogin, async(req, res) => {
   try {
+    cartcount = await userhelpers.getcartCount(req.session.user._id);
+       
     userhelpers
       .getCart(req.session.user._id)
       .then(async (cart) => {
-        cartcount = await userhelpers.getcartCount(req.session.user._id);
        
         let totalAmount = await userhelpers.totalAmount(req.session.user._id);
         res.render("user/cart", {
@@ -296,7 +328,7 @@ router.get("/cart", verifyLogin, (req, res) => {
         });
       })
       .catch(() => {
-        res.render("user/cart", { cartEmpty: true, user: req.session.user });
+        res.render("user/cart", { cartEmpty: true, user: req.session.user ,cartcount});
       });
   } catch (e) {
     res.redirect("/errors");
@@ -633,14 +665,14 @@ router.get("/orderdetails/:id", verifyLogin, (req, res) => {
           result,
           orders,
           stepper,
-          cartcount,
+          cartcount,profile:true
         });
       })
       .catch(() => {
         res.render("user/orderdetails", {
           user: req.session.user,
           image: true,
-          cartcount,
+          cartcount,profile:true
         });
       });
   } catch (e) {
@@ -649,11 +681,15 @@ router.get("/orderdetails/:id", verifyLogin, (req, res) => {
   }
 });
 //going back to order page
-router.get("/orders", verifyLogin, (req, res) => {
+router.get("/orders", verifyLogin,async (req, res) => {
   try {
+    cartcount = await userhelpers.getcartCount(req.session.user._id);
+     
     userhelpers.getOrderProduct(req.session.user._id).then(async (result) => {
-      cartcount = await userhelpers.getcartCount(req.session.user._id);
-      res.render("user/orders", { user: req.session.user, result, cartcount });
+      res.render("user/orders", { user: req.session.user, result, cartcount,profile:true });
+    }).catch(()=>{
+      res.render("user/orders", { user: req.session.user, image:true, cartcount,profile:true });
+   
     });
   } catch (e) {
     console.log(e);
@@ -688,6 +724,7 @@ router.get("/profile", verifyLogin, (req, res) => {
         result,
         history,
         cartcount,
+        profile:true
       });
     });
   } catch (e) {
@@ -775,14 +812,14 @@ router.get("/wishlist", verifyLogin, async (req, res) => {
         res.render("user/wishlist", {
           user: req.session.user,
           result,
-          cartcount,
+          cartcount,profile:true
         });
       })
       .catch(() => {
         res.render("user/wishlist", {
           user: req.session.user,
           nowish: true,
-          cartcount,
+          cartcount,wishlist:true
         });
       });
   } catch (e) {
@@ -869,7 +906,7 @@ router.post("/search", async (req, res) => {
             user: req.session.user,
             banner,
             cartcount,
-            index: true,
+            index: true,home:true
           });
         })
         .catch(() => {
@@ -878,17 +915,17 @@ router.post("/search", async (req, res) => {
             banner,
             notfound: true,
             cartcount,
-            index: true,
+            index: true,home:true
           });
         });
     } else {
       userhelpers
         .searchItem(req.body)
         .then(async (products) => {
-          res.render("user/index", { products, banner, index: true });
+          res.render("user/index", { products, banner, index: true ,home:true});
         })
         .catch(() => {
-          res.render("user/index", { banner, notfound: true, index: true });
+          res.render("user/index", { banner, notfound: true, index: true,home:true });
         });
     }
   } catch (e) {
@@ -900,9 +937,9 @@ router.post("/search", async (req, res) => {
 router.get("/contact", (req, res) => {
   try {
     if (req.session.loggedIn) {
-      res.render("user/contact", { user: req.session.user });
+      res.render("user/contact", { user: req.session.user ,contact:true});
     } else {
-      res.render("user/contact");
+      res.render("user/contact",{contact:true});
     }
   } catch (e) {
     console.log(e);
@@ -913,9 +950,10 @@ router.get("/contact", (req, res) => {
 router.get("/about", (req, res) => {
   try {
     if (req.session.loggedIn) {
-      res.render("user/about", { user: req.session.user });
+      
+      res.render("user/about", { user: req.session.user ,about:true});
     } else {
-      res.render("user/about");
+      res.render("user/about",{about:true});
     }
   } catch (e) {
     console.log(e);
