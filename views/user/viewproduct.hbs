@@ -15,7 +15,7 @@
 	<!-- end breadcrumb section -->
 
 	<!-- single product -->
-	<div class="single-product mt-150 mb-150">
+	<div class="single-product mt-150 mb-5">
 		<div class="container">
 			<div class="row">
              	<div class="col-md-5">
@@ -63,7 +63,48 @@
 		</div>
 	</div>
 	<!-- end single product -->
+	<div class="logo-carousel-section " style="background-color: #ecfdff;;">
+		<div class="container">
+			<div class="row">
+			<h4 class="f-5 ml-5 " style="text-decoration: underline;">Related Items</h4>
+				<div class="col-md-12 d-flex">
+					{{#each products}}
+								
+				<div class="col-lg-4 col-md-6 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
+
+					<div style="height:34rem;" class="single-product-item " id="bodyesh">
+						
+						
+	{{!-- {{#ifCond  this.category ../coupon.category}}  <h6 class="vc">Offer</h6>{{/ifCond}} --}}
+	                   {{#if offer}}<h6 class="vc">{{this.discount}}% Off</h6>{{/if}}
+						{{#if nostock}}
+						<div class="product-image">
+							
+							<img style="height:250px;" class="imageZoom" src="/product-images/{{this._id}}.jpg" alt="">
+						</div>
+					{{else}}	<div class="product-image">
+							
+							<a  href="/viewproduct/{{this._id}}"><img style="height:250px;" class="imageZoom" src="/product-images/{{this._id}}.jpg" alt=""></a>
+						</div>
+						{{/if}}
+						<h3 class="col-12 text-truncate mb-2">{{this.name}}</h3>
+                       <s><h4 class="mrp hide p-0 m-0">{{this.MRP}}</h4></s>
+						
+					
+						<p class="product-price m-0 p-0 price">{{this.price}} </p>
+					
+				</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+		</div>
+					
+				
+			</div>
+	
 <!-- logo carousel -->
+	
 	<div class="logo-carousel-section">
 		<div class="container">
 			<div class="row">
@@ -89,6 +130,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- end logo carousel -->
 	<div class="alert alert-success alert-dismissible fade" style="position: fixed;z-index: 100; top:8rem; right:1rem; "
     id="cartAddedMessage" role="alert">

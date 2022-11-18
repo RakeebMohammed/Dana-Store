@@ -241,6 +241,22 @@ router.get("/viewproduct/:id", function (req, res, next) {
     productHelpers.viewProduct(req.params.id).then(async (result) => {
       let cartcount = 0;
       let wishPresent = false;
+      let products=await userhelpers.relatedProduct(req.params.id)
+      let coupon=await  productHelpers.findOffers()
+   
+        for (i = 0; i < products.length; i++) {
+          console.log(products[i]);
+          for(j=0;j<coupon.length;j++){
+            if(products[i].category==coupon[j].category){
+              products[i].offer=true
+              products[i].discount=coupon[j].coffer
+            }
+          }
+          if (products[i].stock == 0) {
+            products[i].nostock = true;
+          }
+        }
+      
       if (req.session.user) {
         cartcount = await userhelpers.getcartCount(req.session.user._id);
         wishlist = await userhelpers
@@ -263,7 +279,7 @@ router.get("/viewproduct/:id", function (req, res, next) {
         result,
         user: req.session.user,
         cartcount,
-        wishPresent,
+        wishPresent,products
       });
     });
   } catch (e) {

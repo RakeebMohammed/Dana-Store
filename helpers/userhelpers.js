@@ -1216,4 +1216,15 @@ let count =await db.get().collection(collections.PRODUCT_COLLECTION).count()
         resolve(products)
        })
     },
+relatedProduct:(cat)=>{
+  return new Promise(async(resolve, reject) => {
+  let product=await  db.get().collection(collections.PRODUCT_COLLECTION).aggregate([{$match:{_id:objectid(cat)}},{$project:{category:1}}]).toArray()
+ let result=await db.get().collection(collections.PRODUCT_COLLECTION).find({$and:[{category:product[0].category},{_id:{$ne:objectid(cat)}}]}).limit(3).toArray()
+  resolve(result)
+  console.log(result);
+
+  console.log(product[0].category);
+})
+}
 };
+
