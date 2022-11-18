@@ -109,14 +109,22 @@ router.get("/", async function (req, res, next) {
       cartcount = await userhelpers.getcartCount(req.session.user._id);
     }
     let banner = await adminHelpers.getBanner();
-    console.log("error");
-    console.log(banner);
+    let coupon=await  productHelpers.findOffers()
+      
     // console.log(req.session.user);
     let user = req.session.user;
     userhelpers.getPaginatedProducts(skip,perPage).then((products) => {
       productHelpers.findCategory().then((result) => {
         for (i = 0; i < products.length; i++) {
           console.log(products[i]);
+          //testing
+          for(j=0;j<coupon.length;j++){
+            if(products[i].category==coupon[j].category){
+              products[i].offer=true
+              products[i].discount=coupon[j].coffer
+            }
+          }
+          //end
           if (products[i].stock == 0) {
             products[i].nostock = true;
           }
@@ -147,8 +155,16 @@ router.get("/selectcategory/:id", (req, res) => {
     productHelpers.selectCategory(req.params.id).then((products) => {
       productHelpers.findCategory().then(async (result) => {
         let banner = await adminHelpers.getBanner();
+        let coupon=await  productHelpers.findOffers()
+   
         for (i = 0; i < products.length; i++) {
           console.log(products[i]);
+          for(j=0;j<coupon.length;j++){
+            if(products[i].category==coupon[j].category){
+              products[i].offer=true
+              products[i].discount=coupon[j].coffer
+            }
+          }
           if (products[i].stock == 0) {
             products[i].nostock = true;
           }
@@ -889,6 +905,8 @@ router.post("/search", async (req, res) => {
   try {
     console.log(req.body);
     let banner = await adminHelpers.getBanner();
+    let coupon=await  productHelpers.findOffers()
+   
     if (req.session.loggedIn) {
       cartcount = await userhelpers.getcartCount(req.session.user._id);
 
@@ -897,10 +915,17 @@ router.post("/search", async (req, res) => {
         .then(async (products) => {
           for (i = 0; i < products.length; i++) {
             console.log(products[i]);
+            for(j=0;j<coupon.length;j++){
+              if(products[i].category==coupon[j].category){
+                products[i].offer=true
+                products[i].discount=coupon[j].coffer
+              }
+            }
             if (products[i].stock == 0) {
               products[i].nostock = true;
             }
           }
+         
           res.render("user/index", {
             products,
             user: req.session.user,
@@ -908,7 +933,7 @@ router.post("/search", async (req, res) => {
             cartcount,
             index: true,home:true
           });
-        })
+        } )
         .catch(() => {
           res.render("user/index", {
             user: req.session.user,
@@ -922,6 +947,18 @@ router.post("/search", async (req, res) => {
       userhelpers
         .searchItem(req.body)
         .then(async (products) => {
+          for (i = 0; i < products.length; i++) {
+            console.log(products[i]);
+            for(j=0;j<coupon.length;j++){
+              if(products[i].category==coupon[j].category){
+                products[i].offer=true
+                products[i].discount=coupon[j].coffer
+              }
+            }
+            if (products[i].stock == 0) {
+              products[i].nostock = true;
+            }
+          }
           res.render("user/index", { products, banner, index: true ,home:true});
         })
         .catch(() => {

@@ -1,4 +1,37 @@
 <style>
+
+
+.vc {
+
+ background: #39b6ba;
+  color: #fff;
+  width: 100px;
+  text-align: center;
+  padding: 6.5px 18px;
+  position: relative;
+}
+.vc:after {
+  width: 0;
+  height: 0;
+  border: 12.5px solid transparent;
+  position: absolute;
+  content: "";
+  border-top-color: #39b6ba;
+  right: -23px;
+  top: 0px;
+  border-left-color: #39b6ba;
+}
+.vc:before {
+    width: 0;
+    height: 0;
+    border: 13px solid transparent;
+    position: absolute;
+    content: "";
+    border-bottom-color: #39b6ba;
+    right: -23px;
+    top: -1px;
+}
+
 .outofstock:before {
 	content: "";
 	background: rgba(255,255,255,0.5);
@@ -143,8 +176,12 @@
 			<div class="row">
 				{{#each products}}
 				<div class="col-lg-4 col-md-6 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
-					
-					<div style="height:36rem;" class="single-product-item ">
+
+					<div style="height:38rem;" class="single-product-item " id="bodyesh">
+						
+						
+	{{!-- {{#ifCond  this.category ../coupon.category}}  <h6 class="vc">Offer</h6>{{/ifCond}} --}}
+	  {{#if offer}}<h6 class="vc">{{this.discount}}% Off</h6>{{/if}}
 						{{#if nostock}}
 						<div class="product-image">
 							
@@ -170,6 +207,7 @@
 		</div>
 		{{/if}}
 	<!-- testimonail-section -->
+	{{#if all}}
 	<div class="d-flex justify-content-center my-3"><nav aria-label="Page navigation example">
 		<ul class="pagination">
 			<li class="page-item">
@@ -189,6 +227,7 @@
 		</ul>
 	</nav>
 	</div>
+	{{/if}}
 	<div class="testimonail-section mt-5 mb-5">
 		<div class="container">
 			<div class="row">
