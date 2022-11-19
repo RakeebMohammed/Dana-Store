@@ -52,31 +52,36 @@
 								
 						<h4>Share:</h4>
 						<ul class="product-share">
-							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-							<li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-						</ul>
+								<li><a href="https://www.facebook.com/rakku.rakeeb" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							
+							<li><a href="https://www.instagram.com/rakkucha_dana/?igshid=YmMyMTA2M2Y%3D" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="https://www.linkedin.com/in/mohd-rakeeb-43a375257/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+						<li><a href="https://github.com/RakeebMohammed" target="_blank"><i class="fab fa-github"></i></a></li>
+							
+					</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- end single product -->
-	<div class="logo-carousel-section " style="background-color: #ecfdff;;">
+	
+	
+	<div class="mx-3 product-section mt-5  " style="background-color: #ecfdff;;">
 		<div class="container">
+			<div class="pt-4 mb-4"><h4 class="f-5  " style="text-decoration: underline;">Related Items</h4>
+				</div>
+		
+			
 			<div class="row">
-			<h4 class="f-5 ml-5 " style="text-decoration: underline;">Related Items</h4>
-				<div class="col-md-12 d-flex">
-					{{#each products}}
-								
-				<div class="col-lg-4 col-md-6 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
+				{{#each products}}
+				<div class="col-lg-4 col-md-4 text-center {{#if nostock}} outofstock {{else}} {{/if}}">
 
-					<div style="height:34rem;" class="single-product-item " id="bodyesh">
+					<div style="height:35rem;" class="single-product-item  " id="bodyesh">
 						
 						
 	{{!-- {{#ifCond  this.category ../coupon.category}}  <h6 class="vc">Offer</h6>{{/ifCond}} --}}
-	                   {{#if offer}}<h6 class="vc">{{this.discount}}% Off</h6>{{/if}}
+	  {{#if offer}}<h6 class="vc">{{this.discount}}% Off</h6>{{/if}}
 						{{#if nostock}}
 						<div class="product-image">
 							
@@ -88,20 +93,20 @@
 						</div>
 						{{/if}}
 						<h3 class="col-12 text-truncate mb-2">{{this.name}}</h3>
-                       <s><h4 class="mrp hide p-0 m-0">{{this.MRP}}</h4></s>
+<s><h4 class="mrp hide p-0 m-0">{{this.MRP}}</h4></s>
 						
 					
 						<p class="product-price m-0 p-0 price">{{this.price}} </p>
 					
-				</div>
+					</div>
 				</div>
 				{{/each}}
 			</div>
 		</div>
-		</div>
+		</div></div>
 					
 				
-			</div>
+			
 	
 <!-- logo carousel -->
 	
@@ -208,4 +213,14 @@ $('#wishExistsMessage').addClass('show')
 	//document.getElementById('bann').style.color="green"
 	
 		}
+		let price=document.querySelectorAll('.price')
+	let mrp=document.querySelectorAll('.mrp')
+
+	for(i=0;i<price.length;i++){
+		if(price[i].innerText != mrp[i].innerText){
+		
+			mrp[i].style.display="block";
+	
+		}
+	}
 	</script>
