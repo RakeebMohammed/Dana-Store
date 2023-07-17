@@ -76,6 +76,7 @@ router.post("/verifyotp", (req, res) => {
 //home page
 router.get("/", async function (req, res, next) {
  // try {
+  console.log(db.get());
     let cartcount = null;
   //  
   const perPage = 9;
